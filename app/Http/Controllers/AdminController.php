@@ -10,12 +10,13 @@ use App\Models\Kecamatan;
 use App\Models\Kota;
 use App\Models\User;
 use App\Models\Profil;
+use Session;
 
 class AdminController extends Controller {
 
   public function index() {
-    $data_user = User::where('user_id', auth()->user()->user_id)->first();
-    $data_profil = Profil::where('user_id', auth()->user()->user_id)->first();
+    $data_user = User::where('user_id', Session::get('loginId'))->first();
+    $data_profil = Profil::where('user_id',  Session::get('loginId'))->first();
     $data_profil_latest = Profil::orderBy('profil_id', 'DESC')->first();
     $data_kota = Kota::orderBy('kota', 'ASC')->get();
     $data_kecamatan = Kecamatan::orderBy('kecamatan', 'ASC')->get();

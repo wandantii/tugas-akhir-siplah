@@ -9,6 +9,7 @@ use App\Models\Kriteria;
 use App\Models\Supplier;
 use App\Models\User;
 use App\Models\Profil;
+use Session;
 
 class AuthController extends Controller {
 
@@ -17,15 +18,24 @@ class AuthController extends Controller {
   }
 
   public function loginStore(Request $request) {
-    $credentials = $request->validate([
+    $request->validate([
       'email' => 'required|email:dns',
       'password' => 'required'
     ]);
-    if(Auth::attempt($credentials)) {
-      $request->session()->regenerate();
-      return redirect()->intended('/admin');
+    $user = User::where('email', '=', $request->email)->first();
+    if($user) {
+      if(Hash::check($request->password, $user->password)) {
+        $request->session()->put('loginId', $user->user_id);
+        return redirect('admin');
+      } else {
+        return back()->with('error', 'Password tidak sesuai.');
+      }
     }
-    return back()->with('error', 'Login gagal! Periksa kembali email dan password Anda.');
+    // if(Auth::attempt($credentials)) {
+    //   $request->session()->regenerate();
+    //   return redirect()->intended('/admin');
+    // }
+    // return back()->with('error', 'Login gagal! Periksa kembali email dan password Anda.');
   }
 
   public function register() {
@@ -33,14 +43,13 @@ class AuthController extends Controller {
   }
 
   public function registerStore(Request $request) {
-    $data_user = User::orderBy('created_at', 'DESC')->first();
-    $validatedData = $request->validate(
+    $request->validate(
       [
         'nama' => 'min:5|max:225',
         'email' => 'email:dns|unique:user',
         'password' => 'min:5|max:225'
       ],
-      [   
+      [
         'nama.min' => 'Minimal terdiri dari 5 huruf.',
         'nama.max' => 'Maksimal terdiri dari 225 huruf.',
         'email.email' => 'Email tidak terdeteksi.',
@@ -49,18 +58,42 @@ class AuthController extends Controller {
         'password.max' => 'Maksimal terdiri dari 225 huruf.'
       ]
     );
-    $validatedData['password'] = Hash::make($validatedData['password']);
-    User::create($validatedData);
+    $user = new User();
+    $user->nama = $request->nama;
+    $user->email = $request->email;
+    $user->password = Hash::make($request->password);
+    $response = $user->save();
+    if($response) {
+      return redirect('login')->with('success', 'Registrasi berhasil! Silahkan login.');
+    } else {
+      return back()->with('error', 'Ups! Maaf ada kesalahan, coba beberapa saat lagi.');
+    }
+    // $validatedData['password'] = Hash::m  ake($validatedData['password']);
+    // User::create($validatedData);
     // $request->session()->flash('success', 'Registrasi berhasil! Silahkan login.');
     // return redirect('login');
-    return redirect('login')->with('success', 'Registrasi berhasil! Silahkan login.');
+    // return redirect('login')->with('success', 'Registrasi berhasil! Silahkan login.');
   }
 
   public function logout() {
-    Auth::logout();
-    request()->session()->invalidate();
-    request()->session()->regenerateToken();
-    return redirect('login')->with('success', 'Logout berhasil! Silahkan login.');
+    // Auth::logout();
+    // request()->session()->invalidate();
+    // request()->session()->regenerateToken();
+    // return redirect('login')->with('success', 'Logout berhasil! Silahkan login.');
+    if(Session::has('loginId')) {
+      Session::pull('loginId');
+      return redirect('login');
+    }
+  }
+
+  public function dashboard() {
+    $data = array();
+    if(Session::has('loginId')) {
+      $data = User::where('user_id', '=', Session::get('loginId'))->first();
+      return redirect('admin');
+    } else {
+      return redirect('login');
+    }
   }
 
 }
