@@ -41,13 +41,22 @@
             <form method="POST" action="{{ url('admin/supplier/store') }}">
               @csrf
             @elseif($keterangan == 'edit')
-            <form method="POST" action="{{ url('admin/supplier/update/'.$data->supplier_id) }}">
+            <form method="POST" action="{{ url('admin/supplier/update/'.$data->supplier_id) }}" enctype="multipart/form-data">
               @csrf {{ method_field('PUT') }}
             @endif
               <div class="row mb-3">
                 <label for="nama" class="col-sm-2 col-form-label">Nama Supplier</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" id="nama" name="nama" @if($keterangan != 'baru') value="{{ $data->nama ?? '' }}" @endif>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="nama" class="col-sm-2 col-form-label">Logo Supplier</label>
+                <div class="col-sm-10">
+                  @if($keterangan != 'baru' && isset($data->logo))
+                  <img src="{{ asset('supplier/'.$data->logo ?? '') }}" alt="Logo Supplier" width="250px" class="mb-2">
+                  @endif
+                  <input class="form-control" type="file" id="logo" name="logo" @if($keterangan != 'baru') value="{{ $data->logo ?? '' }}" @endif>
                 </div>
               </div>
               <div class="row mb-3">
@@ -95,12 +104,7 @@
                 <label for="kecamatan" class="col-sm-2 col-form-label">Kecamatan</label>
                 <div class="col-sm-10">
                   <select class="form-select" aria-label="Default select example" id="kecamatan" name="kecamatan" disabled>
-                  <option selected="true" disabled="disabled">Pilih Kecamatan</option>
-                    @if(isset($data->kecamatan_id))
-                      @foreach($data_kecamatan as $key=>$kecamatan)
-                        <option value="{{ $kecamatan->kecamatan_id }}" @if($keterangan != 'baru') {{ ($kecamatan->kecamatan_id == $data->kecamatan_id) ? 'Selected' : ''}} @endif>{{ $kecamatan->kecamatan }}</option>
-                      @endforeach
-                    @endif
+                    <option selected="true" disabled="disabled">Pilih Kecamatan</option>
                   </select>
                 </div>
               </div>
@@ -137,6 +141,27 @@
     }
   });
 
+  @if($keterangan != 'baru')
+  $(window).on('load', function() {
+    let kota_id = $('#kota').val();
+    var kecamatan_id = {{ $data->kecamatan_id }};
+    $("#kecamatan").attr("disabled", false);
+    $.ajax({
+      type: 'POST',
+      url: "{{route('selectKecamatan')}}",
+      data: {kota_id:kota_id},
+      cache: false,
+      success: function(message) {
+        $('#kecamatan').html(message);
+        $('#kecamatan').val(kecamatan_id);
+      },
+      error: function(data) {
+        console.log('error: ', data);
+      }
+    })
+  });
+  @endif
+
   $('#kota').on('change', function() {
     let kota_id = $('#kota').val();
     $("#kecamatan").attr("disabled", false);
@@ -147,7 +172,6 @@
       cache: false,
       success: function(message) {
         $('#kecamatan').html(message);
-        console.log(message);
       },
       error: function(data) {
         console.log('error: ', data);

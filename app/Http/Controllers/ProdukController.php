@@ -35,6 +35,10 @@ class ProdukController extends Controller {
     $data->url = $request->url;
     $data->jumlah_terjual = $request->jumlah_terjual;
     $data->rating = $request->rating;
+    if($request->hasFile('foto_produk')) {
+      $request->file('foto_produk')->move('produk/', $request->file('foto_produk')->getClientOriginalName());
+      $data->foto_produk = $request->file('foto_produk')->getClientOriginalName();
+    }
     $data->save();
     return redirect('admin/produk')->with('success', 'Berhasil menambah data.');
   }
@@ -59,6 +63,10 @@ class ProdukController extends Controller {
     $data->url = $request->url;
     $data->jumlah_terjual = $request->jumlah_terjual;
     $data->rating = $request->rating;
+    if($request->hasFile('foto_produk')) {
+      $request->file('foto_produk')->move('produk/', $request->file('foto_produk')->getClientOriginalName());
+      $data->foto_produk = $request->file('foto_produk')->getClientOriginalName();
+    }
     $data->save();
     return redirect('admin/produk')->with('success', 'Berhasil mengubah data.');
   }

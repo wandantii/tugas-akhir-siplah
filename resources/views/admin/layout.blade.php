@@ -61,7 +61,7 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="{{ asset('img/profile-img.jpg') }}" alt="Profile" class="rounded-circle">
+            <img @if(isset($data_profil->foto_profil)) src="{{ asset('user/'.$data_profil->foto_profil) }}" @else src="{{ asset('user/blank.jpg') }}" @endif class="rounded-circle" alt="Foto Profil">
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -100,34 +100,33 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link" href="{{ url('admin') }}">
-          <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
+        <a class="nav-link {{ request()->is('admin') ? '' : 'collapsed' }}" href="{{ url('admin') }}">
+          <i class="bi bi-grid"></i><span>Dashboard</span>
         </a>
-      </li><!-- End Dashboard Nav -->
+      </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link {{ request()->is('admin/kriteria') | request()->is('admin/supplier') | request()->is('admin/kategoriproduk') | request()->is('admin/produk') ? '' : 'collapsed' }}" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>Data Master</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="components-nav" class="nav-content collapse {{ request()->is('admin/kriteria') | request()->is('admin/supplier') | request()->is('admin/kategoriproduk') | request()->is('admin/produk') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{ url('admin/kriteria') }}">
+            <a href="{{ url('admin/kriteria') }}" class="{{ request()->is('admin/kriteria') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Kriteria</span>
             </a>
           </li>
           <li>
-            <a href="{{ url('admin/supplier') }}">
+            <a href="{{ url('admin/supplier') }}" class="{{ request()->is('admin/supplier') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Supplier</span>
             </a>
           </li>
           <li>
-            <a href="{{ url('admin/kategoriproduk') }}">
+            <a href="{{ url('admin/kategoriproduk') }}" class="{{ request()->is('admin/kategoriproduk') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Kategori Produk</span>
             </a>
           </li>
           <li>
-            <a href="{{ url('admin/produk') }}">
+            <a href="{{ url('admin/produk') }}" class="{{ request()->is('admin/produk') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Produk</span>
             </a>
           </li>
@@ -135,17 +134,17 @@
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link {{ request()->is('admin/metode-moora') | request()->is('admin/metode-bwm') ? '' : 'collapsed' }}" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-journal-text"></i><span>Perhitungan</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="forms-nav" class="nav-content collapse {{ request()->is('admin/metode-moora') | request()->is('admin/metode-bwm') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{ url('admin/metode-moora') }}">
+            <a href="{{ url('admin/metode-moora') }}" class="{{ request()->is('admin/metode-moora') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Metode MOORA</span>
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="{{ url('admin/metode-bwm') }}">
               <i class="bi bi-circle"></i><span>Metode BWM</span>
             </a>
           </li>

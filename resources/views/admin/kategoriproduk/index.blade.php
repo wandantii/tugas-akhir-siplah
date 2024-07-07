@@ -52,7 +52,7 @@
                 <tbody>
                   @foreach($data as $key=>$value)
                   <tr>
-                    <td>{{ ($key+1)."." }}.</td>
+                    <td>{{ ($key+1)."." }}</td>
                     <td>{{ $value->kategori_produk }}</td>
                     <td>{{ $value->sub_kategori_produk }}</td>
                     <td>

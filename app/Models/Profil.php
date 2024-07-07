@@ -13,6 +13,10 @@ class Profil extends Authenticatable
     use HasFactory;
     protected $table = "profil";
     protected $primaryKey = "profil_id";
+  
+    public function user() {
+      return $this->belongsTo('App\Models\User', 'user_id', 'user_id');
+    }
 
     public function kecamatan() {
       return $this->belongsTo('App\Models\Kecamatan', 'kecamatan_id', 'kecamatan_id');

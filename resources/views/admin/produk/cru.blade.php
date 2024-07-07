@@ -41,7 +41,7 @@
             <form method="POST" action="{{ url('admin/produk/store') }}">
               @csrf
             @elseif($keterangan == 'edit')
-            <form method="POST" action="{{ url('admin/produk/update/'.$data->produk_id) }}">
+            <form method="POST" action="{{ url('admin/produk/update/'.$data->produk_id) }}" enctype="multipart/form-data">
               @csrf {{ method_field('PUT') }}
             @endif
               <div class="row mb-3">
@@ -70,6 +70,15 @@
                 <label for="nama" class="col-sm-2 col-form-label">Nama Produk</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" id="nama" name="nama" @if($keterangan != 'baru') value="{{ $data->nama ?? '' }}" @endif>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="nama" class="col-sm-2 col-form-label">Foto Produk</label>
+                <div class="col-sm-10">
+                  @if($keterangan != 'baru' && isset($data->foto_produk))
+                  <img src="{{ asset('produk/'.$data->foto_produk ?? '') }}" alt="Foto Produk" width="250px" class="mb-2">
+                  @endif
+                  <input class="form-control" type="file" id="foto_produk" name="foto_produk" @if($keterangan != 'baru') value="{{ $data->foto_produk ?? '' }}" @endif>
                 </div>
               </div>
               <div class="row mb-3">

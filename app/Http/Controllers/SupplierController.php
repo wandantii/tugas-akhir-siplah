@@ -35,6 +35,10 @@ class SupplierController extends Controller {
     $data->kecamatan_id = $request->kecamatan;
     $data->alamat = $request->alamat;
     $data->kode_pos = $request->kode_pos;
+    if($request->hasFile('logo')) {
+      $request->file('logo')->move('supplier/', $request->file('logo')->getClientOriginalName());
+      $data->logo = $request->file('logo')->getClientOriginalName();
+    }
     $data->save();
     return redirect('admin/supplier')->with('success', 'Berhasil menambah data.');
   }
@@ -59,6 +63,10 @@ class SupplierController extends Controller {
     $data->kecamatan_id = $request->kecamatan;
     $data->alamat = $request->alamat;
     $data->kode_pos = $request->kode_pos;
+    if($request->hasFile('logo')) {
+      $request->file('logo')->move('supplier/', $request->file('logo')->getClientOriginalName());
+      $data->logo = $request->file('logo')->getClientOriginalName();
+    }
     $data->save();
     return redirect('admin/supplier')->with('success', 'Berhasil mengubah data.');
   }

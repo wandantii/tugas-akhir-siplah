@@ -17,7 +17,7 @@ class AuthCheck
     public function handle(Request $request, Closure $next)
     {
         if(!Session()->has('loginId')) {
-            return redirect('login')->with('error', 'Silahkan login terlebih dahulu.');
+            return redirect('login');
         }
         return $next($request);
     }

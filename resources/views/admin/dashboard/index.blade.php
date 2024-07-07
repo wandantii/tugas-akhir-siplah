@@ -17,9 +17,9 @@
       <div class="col-xl-4">
         <div class="card">
           <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-            <img src="{{ asset('img/profile-img.jpg') }}" alt="Profile" class="rounded-circle">
-            <h2>{{ $data_profil->nama }}</h2>
-            <h3>-</h3>
+            <img @if(isset($data_profil->foto_profil)) src="{{ asset('user/'.$data_profil->foto_profil) }}" @else src="{{ asset('user/blank.jpg') }}" @endif class="rounded-circle" alt="Foto Profil" width="350px" class="mb-10">
+            <h2>{{ $data_profil->user->nama ?? '-' }}</h2>
+            <h3>{{ $data_profil->alamat ?? '-' }}, {{ $data_profil->kecamatan->kecamatan ?? '-' }}, {{ $data_profil->kota->kota ?? '-' }}</h3>
             <!-- <div class="social-links mt-2">
               <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
               <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -54,7 +54,7 @@
                 <h5 class="card-title">Detail Profil</h5>
                 <div class="row">
                   <div class="col-lg-3 col-md-4 label ">Nama</div>
-                  <div class="col-lg-9 col-md-8">{{ $data_user->nama ?? '-' }}</div>
+                  <div class="col-lg-9 col-md-8">{{ $data_profil->user->nama ?? '-' }}</div>
                 </div>
                 <div class="row">
                   <div class="col-lg-3 col-md-4 label">Alamat</div>
@@ -65,33 +65,34 @@
               <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
                 <!-- Profile Edit Form -->
                 @if(!isset($data_profil))
-                <form method="POST" action="{{ url('admin/profil/store') }}">
+                <form method="POST" action="{{ url('admin/profil/store') }}" enctype="multipart/form-data">
                   @csrf
                     @if(isset($data_profil_latest))
-                    <input type="hidden" id="profil_id" name="profil_id" value="{{ $data_profil_latest->profil_id+1 }}">
+                    <input type="text" id="profil_id" name="profil_id" value="{{ $data_profil_latest->profil_id+1 }}">
                     @else
-                    <input type="hidden" id="profil_id" name="profil_id" value="1">
+                    <input type="text" id="profil_id" name="profil_id" value="1">
                     @endif
                 @elseif(isset($data_profil))
-                <form method="POST" action="{{ url('admin/profil/update/'.$data_profil->profil_id) }}">
+                <form method="POST" action="{{ url('admin/profil/update/'.$data_profil->profil_id ) }}" enctype="multipart/form-data">
                   @csrf {{ method_field('PUT') }}
                 @endif
                   <div class="row mb-3">
                     <label for="profileImage" class="col-sm-2 col-form-label">Foto Profil</label>
                     <div class="col-sm-10">
                       @if(isset($data_profil->foto_profil))
-                      <img src="assets/img/profile-img.jpg" alt="Profile">
+                      <img src="{{ asset('user/'.$data_profil->foto_profil ?? '') }}" alt="Foto Profil" width="350px" class="mb-2">
                       @endif
-                      <div class="pt-2">
+                      <input class="form-control" type="file" id="foto_profil" name="foto_profil" value="{{ $data->foto_profil ?? '' }}">
+                      <!-- <div class="">
                         <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
                         <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                   <div class="row mb-3">
                     <label for="nama" class="col-sm-2 col-form-label">Nama</label>
                     <div class="col-sm-10">
-                      <input name="nama" type="text" class="form-control" id="nama" value="{{ $data_user->nama ?? '' }}">
+                      <input name="nama" type="text" class="form-control" id="nama" value="{{ $data_profil->user->nama ?? '' }}">
                     </div>
                   </div>
                   <div class="row mb-3">
@@ -116,9 +117,6 @@
                     <div class="col-sm-10">
                       <select class="form-select" aria-label="Default select example" id="kecamatan" name="kecamatan" disabled>
                         <option selected="true" disabled="disabled">Pilih Kecamatan</option>
-                        @foreach($data_kecamatan as $key=>$kecamatan)
-                          <option value="{{ $kecamatan->kecamatan_id }}" @if(isset($data_profil->kecamatan_id)) {{ ($kecamatan->kecamatan_id == $data_profil->kecamatan_id) ? 'Selected' : ''}} @endif>{{ $kecamatan->kecamatan }}</option>
-                        @endforeach
                       </select>
                     </div>
                   </div>
@@ -181,6 +179,28 @@
     }
   });
 
+  @if(isset($data_profil))
+  $(window).on('load', function() {
+    let kota_id = $('#kota').val();
+    var kecamatan_id = {{ $data_profil->kecamatan_id }};
+    console.log(kecamatan_id);
+    $("#kecamatan").attr("disabled", false);
+    $.ajax({
+      type: 'POST',
+      url: "{{route('selectKecamatan')}}",
+      data: {kota_id:kota_id},
+      cache: false,
+      success: function(message) {
+        $('#kecamatan').html(message);
+        $('#kecamatan').val(kecamatan_id);
+      },
+      error: function(data) {
+        console.log('error: ', data);
+      }
+    })
+  });
+  @endif
+
   $('#kota').on('change', function() {
     let kota_id = $('#kota').val();
     $("#kecamatan").attr("disabled", false);
@@ -191,7 +211,6 @@
       cache: false,
       success: function(message) {
         $('#kecamatan').html(message);
-        console.log(message);
       },
       error: function(data) {
         console.log('error: ', data);
