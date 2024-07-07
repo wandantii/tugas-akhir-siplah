@@ -19,6 +19,7 @@ class CreateProduk extends Migration
             $table->integer('kecamatan_id')->nullable();
             $table->integer('kategori_produk_id')->nullable();
             $table->string('nama')->nullable();
+            $table->string('foto_produk')->nullable();
             $table->integer('harga')->nullable();
             $table->string('url')->nullable();
             $table->integer('jumlah_terjual')->nullable();

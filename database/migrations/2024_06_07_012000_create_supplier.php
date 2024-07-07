@@ -16,6 +16,7 @@ class CreateSupplier extends Migration
         Schema::create('supplier', function (Blueprint $table) {
             $table->increments('supplier_id');
             $table->string('nama')->nullable();
+            $table->string('logo')->nullable();
             $table->decimal('rating')->nullable();
             $table->integer('jumlah_pesanan_selesai')->nullable();
             $table->string('instagram')->nullable();
