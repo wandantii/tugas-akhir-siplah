@@ -126,6 +126,11 @@
             </a>
           </li>
           <li>
+            <a href="{{ url('admin/satuanproduk') }}" class="{{ request()->is('admin/satuanproduk') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Satuan Produk</span>
+            </a>
+          </li>
+          <li>
             <a href="{{ url('admin/produk') }}" class="{{ request()->is('admin/produk') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Produk</span>
             </a>

@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\KategoriProdukController;
+use App\Http\Controllers\SatuanProdukController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\KriteriaController;
 use App\Http\Controllers\MetodeMooraController;
@@ -65,13 +66,21 @@ Route::group(['middleware' => 'isLoggedIn'], function() {
   Route::put('admin/supplier/update/{id}', [SupplierController::class, 'update']);
   Route::delete('admin/supplier/delete/{id}', [SupplierController::class, 'delete']);
 
-  /* Admin - Produk */
+  /* Admin - Kategori Produk */
   Route::get('admin/kategoriproduk', [KategoriProdukController::class, 'index']);
   Route::get('admin/kategoriproduk/baru', [KategoriProdukController::class, 'baru']);
   Route::post('admin/kategoriproduk/store', [KategoriProdukController::class, 'store']);
   Route::get('admin/kategoriproduk/edit/{id}', [KategoriProdukController::class, 'edit']);
   Route::put('admin/kategoriproduk/update/{id}', [KategoriProdukController::class, 'update']);
   Route::delete('admin/kategoriproduk/delete/{id}', [KategoriProdukController::class, 'delete']);
+  
+  /* Admin - Satuan Produk */
+  Route::get('admin/satuanproduk', [SatuanProdukController::class, 'index']);
+  Route::get('admin/satuanproduk/baru', [SatuanProdukController::class, 'baru']);
+  Route::post('admin/satuanproduk/store', [SatuanProdukController::class, 'store']);
+  Route::get('admin/satuanproduk/edit/{id}', [SatuanProdukController::class, 'edit']);
+  Route::put('admin/satuanproduk/update/{id}', [SatuanProdukController::class, 'update']);
+  Route::delete('admin/satuanproduk/delete/{id}', [SatuanProdukController::class, 'delete']);
 
   /* Admin - Produk */
   Route::get('admin/produk', [ProdukController::class, 'index']);
