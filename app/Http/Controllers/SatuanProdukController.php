@@ -24,10 +24,9 @@ class SatuanProdukController extends Controller {
 
   public function store(Request $request) {
     $data = new SatuanProduk;
-    $data->satuan_produk = $request->satuan_produk;
-    $data->sub_satuan_produk = $request->sub_satuan_produk;
+    $data->nama = $request->nama;
     $data->save();
-    return redirect('admin/satuan_produk')->with('success', 'Berhasil menambah data.');
+    return redirect('admin/satuanproduk')->with('success', 'Berhasil menambah data.');
   }
 
   public function edit($satuan_produk_id) {
@@ -38,20 +37,19 @@ class SatuanProdukController extends Controller {
 
   public function update(Request $request, $satuan_produk_id) {
     $data = SatuanProduk::find($satuan_produk_id);
-    $data->satuan_produk = $request->satuan_produk;
-    $data->sub_satuan_produk = $request->sub_satuan_produk;
+    $data->nama = $request->nama;
     $data->save();
-    return redirect('admin/satuan_produk')->with('success', 'Berhasil mengubah data.');
+    return redirect('admin/satuanproduk')->with('success', 'Berhasil mengubah data.');
   }
 
   public function delete($satuan_produk_id) {
     $data = SatuanProduk::find($satuan_produk_id);
     $data_satuan_produk = Produk::where('satuan_produk_id', $satuan_produk_id)->count();
     if($data_satuan_produk > 0) {
-      return redirect('admin/satuan_produk')->with('error', 'Tidak bisa menghapus data! Masih ada Produk yang bekategori '.$data->satuan_produk);
+      return redirect('admin/satuanproduk')->with('error', 'Tidak bisa menghapus data! Masih ada Produk yang bekategori '.$data->satuan_produk);
     } else {
       $data->delete();
-      return redirect('admin/satuan_produk')->with('success', 'Berhasil menghapus data.');
+      return redirect('admin/satuanproduk')->with('success', 'Berhasil menghapus data.');
     }
   }
 

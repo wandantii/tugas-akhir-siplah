@@ -27,7 +27,7 @@ class KategoriProdukController extends Controller {
     $data->kategori_produk = $request->kategori_produk;
     $data->sub_kategori_produk = $request->sub_kategori_produk;
     $data->save();
-    return redirect('admin/kategori_produk')->with('success', 'Berhasil menambah data.');
+    return redirect('admin/kategoriproduk')->with('success', 'Berhasil menambah data.');
   }
 
   public function edit($kategori_produk_id) {
@@ -41,17 +41,17 @@ class KategoriProdukController extends Controller {
     $data->kategori_produk = $request->kategori_produk;
     $data->sub_kategori_produk = $request->sub_kategori_produk;
     $data->save();
-    return redirect('admin/kategori_produk')->with('success', 'Berhasil mengubah data.');
+    return redirect('admin/kategoriproduk')->with('success', 'Berhasil mengubah data.');
   }
 
   public function delete($kategori_produk_id) {
     $data = KategoriProduk::find($kategori_produk_id);
     $data_kategori_produk = Produk::where('kategori_produk_id', $kategori_produk_id)->count();
     if($data_kategori_produk > 0) {
-      return redirect('admin/kategori_produk')->with('error', 'Tidak bisa menghapus data! Masih ada Produk yang bekategori '.$data->sub_kategori_produk);
+      return redirect('admin/kategoriproduk')->with('error', 'Tidak bisa menghapus data! Masih ada Produk yang bekategori '.$data->sub_kategori_produk);
     } else {
       $data->delete();
-      return redirect('admin/kategori_produk')->with('success', 'Berhasil menghapus data.');
+      return redirect('admin/kategoriproduk')->with('success', 'Berhasil menghapus data.');
     }
   }
 
