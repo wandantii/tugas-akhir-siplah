@@ -38,7 +38,7 @@
             </h5>
             <!-- General Form Elements -->
             @if($keterangan == 'baru')
-            <form method="POST" action="{{ url('admin/supplier/store') }}">
+            <form method="POST" action="{{ url('admin/supplier/store') }}" enctype="multipart/form-data">
               @csrf
             @elseif($keterangan == 'edit')
             <form method="POST" action="{{ url('admin/supplier/update/'.$data->supplier_id) }}" enctype="multipart/form-data">

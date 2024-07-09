@@ -38,7 +38,7 @@
             </h5>
             <!-- General Form Elements -->
             @if($keterangan == 'baru')
-            <form method="POST" action="{{ url('admin/produk/store') }}">
+            <form method="POST" action="{{ url('admin/produk/store') }}" enctype="multipart/form-data">
               @csrf
             @elseif($keterangan == 'edit')
             <form method="POST" action="{{ url('admin/produk/update/'.$data->produk_id) }}" enctype="multipart/form-data">
@@ -62,6 +62,17 @@
                     <option selected="true" disabled="disabled">Pilih Kategori Produk</option>
                     @foreach($data_kategori_produk as $key=>$kategori_produk)
                       <option value="{{ $kategori_produk->kategori_produk_id }}" @if($keterangan != 'baru') {{ ($data->kategori_produk_id == $kategori_produk->kategori_produk_id) ? 'Selected' : ''}} @endif>{{ $kategori_produk->kategori_produk }} - {{ $kategori_produk->sub_kategori_produk }}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="satuan_produk" class="col-sm-2 col-form-label">Satuan Produk</label>
+                <div class="col-sm-10">
+                  <select class="form-select" aria-label="Default select example" id="satuan_produk" name="satuan_produk">
+                    <option selected="true" disabled="disabled">Pilih Satuan Produk</option>
+                    @foreach($data_satuan_produk as $key=>$satuan_produk)
+                      <option value="{{ $satuan_produk->satuan_produk_id }}" @if($keterangan != 'baru') {{ ($data->satuan_produk_id == $satuan_produk->satuan_produk_id) ? 'Selected' : ''}} @endif>{{ $satuan_produk->nama }}</option>
                     @endforeach
                   </select>
                 </div>

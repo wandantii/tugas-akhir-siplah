@@ -37,18 +37,22 @@
               <table class="col-sm table datatable">
                 <thead>
                   <tr>
-                    <th>No.</th>
-                    <th>Nama</th>
-                    <th>Harga</th>
-                    <th>Action</th>
+                    <th style="width:5%;">No.</th>
+                    <th style="width:15%;">Kategori Produk</th>
+                    <th style="width:20%;">Supplier</th>
+                    <th style="width:40%;">Nama Produk</th>
+                    <th style="width:10%;">Harga</th>
+                    <th style="width:10%;">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   @foreach($data as $key=>$value)
                   <tr>
                     <td>{{ ($key+1)."." }}</td>
+                    <td>{{ $value->kategori_produk->kategori_produk }} - {{ $value->kategori_produk->sub_kategori_produk }}</td>
+                    <td>{{ $value->supplier->nama }}</td>
                     <td>{{ $value->nama }}</td>
-                    <td>{{ $value->harga }}</td>
+                    <td>Rp {{ number_format($value->harga, 2, ",", ".") }}</td>
                     <td>
                       <a href="{{ url('admin/produk/edit/'.$value->produk_id) }}" type="button" class="btn btn-warning mx-1" style="float:left;"><i class="bi bi-pencil-square"></i></a>
                       <form action="{{ url('admin/produk/delete/'.$value->produk_id.'/') }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini?')" style="float:left;" class="mx-1">

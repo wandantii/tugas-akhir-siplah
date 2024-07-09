@@ -65,17 +65,17 @@
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header">
-            </li>
-            <li>
+            <!-- <li class="dropdown-header">
+            </li> -->
+            <!-- <li>
               <hr class="dropdown-divider">
-            </li>
-            <li>
+            </li> -->
+            <!-- <li>
               <a class="dropdown-item d-flex align-items-center" href="#">
                 <i class="bi bi-person"></i>
                 <span>Profil</span>
               </a>
-            </li>
+            </li> -->
             <li>
               <form method="POST" action="{{ url('logout') }}">
                 @csrf

@@ -7,11 +7,12 @@ use App\Models\Kriteria;
 use App\Models\Supplier;
 use App\Models\Produk;
 use App\Models\KategoriProduk;
+use App\Models\SatuanProduk;
 
 class ProdukController extends Controller {
 
   public function index() {
-    $data = Produk::orderBy('nama', 'ASC')->get();
+    $data = Produk::with('kategori_produk', 'satuan_produk', 'supplier')->orderBy('nama', 'ASC')->get();
     return view('admin.produk.index', compact('data'));
   }
 
@@ -19,8 +20,9 @@ class ProdukController extends Controller {
     $data = new Produk;
     $keterangan = "baru";
     $data_kategori_produk = KategoriProduk::orderBy('kategori_produk', 'ASC')->get();
+    $data_satuan_produk = SatuanProduk::orderBy('nama', 'ASC')->get();
     $data_supplier = Supplier::with('kota', 'kecamatan')->orderBy('nama', 'ASC')->get();
-    return view('admin.produk.cru', compact('data', 'keterangan', 'data_kategori_produk', 'data_supplier'));
+    return view('admin.produk.cru', compact('data', 'keterangan', 'data_kategori_produk', 'data_satuan_produk', 'data_supplier'));
   }
 
   public function store(Request $request) {
@@ -47,8 +49,9 @@ class ProdukController extends Controller {
     $data = Produk::find($produk_id);
     $keterangan = "edit";
     $data_kategori_produk = KategoriProduk::orderBy('kategori_produk', 'ASC')->get();
+    $data_satuan_produk = SatuanProduk::orderBy('nama', 'ASC')->get();
     $data_supplier = Supplier::with('kota', 'kecamatan')->orderBy('nama', 'ASC')->get();
-    return view('admin.produk.cru', compact('data', 'keterangan', 'data_kategori_produk', 'data_supplier'));
+    return view('admin.produk.cru', compact('data', 'keterangan', 'data_kategori_produk', 'data_satuan_produk', 'data_supplier'));
   }
 
   public function update(Request $request, $produk_id) {
