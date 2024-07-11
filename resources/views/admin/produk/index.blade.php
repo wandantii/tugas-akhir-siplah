@@ -40,9 +40,9 @@
                     <th style="width:5%;">No.</th>
                     <th style="width:15%;">Kategori Produk</th>
                     <th style="width:20%;">Supplier</th>
-                    <th style="width:40%;">Nama Produk</th>
-                    <th style="width:10%;">Harga</th>
-                    <th style="width:10%;">Action</th>
+                    <th style="width:30%;">Nama Produk</th>
+                    <th style="width:15%;">Harga</th>
+                    <th style="width:15%;">Action</th>
                   </tr>
                 </thead>
                 <tbody>

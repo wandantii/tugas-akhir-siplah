@@ -48,10 +48,10 @@
       box-shadow: grey; 
     }
     ::-webkit-scrollbar-thumb {
-      background: #402c66; 
+      background: #4154f1; 
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #6c4bae; 
+      background: #94c0e7; 
     }
   </style>
 
@@ -129,10 +129,10 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/kriteria') | request()->is('admin/supplier') | request()->is('admin/kategoriproduk') | request()->is('admin/produk') ? '' : 'collapsed' }}" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link {{ request()->is('admin/kriteria') | request()->is('admin/supplier') | request()->is('admin/kategoriproduk') | request()->is('admin/satuanproduk') | request()->is('admin/produk') ? '' : 'collapsed' }}" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>Data Master</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="components-nav" class="nav-content collapse {{ request()->is('admin/kriteria') | request()->is('admin/supplier') | request()->is('admin/kategoriproduk') | request()->is('admin/produk') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+        <ul id="components-nav" class="nav-content collapse {{ request()->is('admin/kriteria') | request()->is('admin/supplier') | request()->is('admin/kategoriproduk') | request()->is('admin/satuanproduk') | request()->is('admin/produk') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
             <a href="{{ url('admin/kriteria') }}" class="{{ request()->is('admin/kriteria') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Kriteria</span>
@@ -172,7 +172,7 @@
             </a>
           </li>
           <li>
-            <a href="{{ url('admin/metode-bwm') }}">
+            <a href="{{ url('admin/metode-bwm') }}" class="{{ request()->is('admin/metode-bwm') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Metode BWM</span>
             </a>
           </li>
@@ -188,14 +188,7 @@
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      &copy; Copyright <strong><span>Imam Musthofa</span></strong>. SPK SIPLah
     </div>
   </footer><!-- End Footer -->
 

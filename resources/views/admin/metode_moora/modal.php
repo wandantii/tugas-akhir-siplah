@@ -1,4 +1,22 @@
-<div class="card">
+    
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row" style="padding-top:25px;">
+              <div class="col-sm">
+                <h5><b>Dengan keterangan sebagai berikut</b></h5>
+                @foreach($data_kriteria as $key=>$kriteria)
+                <span>C{{ $key+1 }} : {{ $kriteria->nama ?? ''}}</span><br>
+                @endforeach
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
       <div class="card-body row" style="padding-top:25px;">
         <div class="col-sm" style="margin-bottom:15px;">
           <h3><b>DATA AWAL</b></h3>

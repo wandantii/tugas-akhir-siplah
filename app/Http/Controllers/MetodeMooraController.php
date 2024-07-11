@@ -335,7 +335,7 @@ class MetodeMooraController extends Controller {
     // dd($rank_sorted);
     
     return view('admin.metode_moora.hasil', compact(
-      'data_produk', 'data_kriteria', 'rank', 'rank_sorted', 'data_supplier', 'pesan'
+      'data_produk', 'data_kriteria', 'rank', 'rank_sorted', 'searchProduk', 'data_supplier', 'pesan'
     ));
   }
 

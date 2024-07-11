@@ -12,7 +12,7 @@ use App\Models\SatuanProduk;
 class SatuanProdukController extends Controller {
 
   public function index() {
-    $data = SatuanProduk::all();
+    $data = SatuanProduk::orderBy('nama', 'ASC')->get();
     return view('admin.satuan_produk.index', compact('data'));
   }
 
@@ -46,7 +46,7 @@ class SatuanProdukController extends Controller {
     $data = SatuanProduk::find($satuan_produk_id);
     $data_satuan_produk = Produk::where('satuan_produk_id', $satuan_produk_id)->count();
     if($data_satuan_produk > 0) {
-      return redirect('admin/satuanproduk')->with('error', 'Tidak bisa menghapus data! Masih ada Produk yang bekategori '.$data->satuan_produk);
+      return redirect('admin/satuanproduk')->with('error', 'Tidak bisa menghapus data! Masih ada Produk yang bekategori '.$data->nama);
     } else {
       $data->delete();
       return redirect('admin/satuanproduk')->with('success', 'Berhasil menghapus data.');

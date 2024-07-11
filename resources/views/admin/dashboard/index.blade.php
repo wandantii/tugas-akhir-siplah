@@ -14,23 +14,7 @@
 
   <section class="section profile">
     <div class="row">
-      <div class="col-xl-4">
-        <div class="card">
-          <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-            <img @if(isset($data_profil->foto_profil)) src="{{ asset('user/'.$data_profil->foto_profil) }}" @else src="{{ asset('user/blank.jpg') }}" @endif class="rounded-circle" alt="Foto Profil" width="350px" class="mb-10">
-            <h2>{{ $data_profil->user->nama ?? '-' }}</h2>
-            <h3>{{ $data_profil->alamat ?? '-' }}, {{ $data_profil->kecamatan->kecamatan ?? '-' }}, {{ $data_profil->kota->kota ?? '-' }}</h3>
-            <!-- <div class="social-links mt-2">
-              <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-              <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-              <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-              <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-            </div> -->
-          </div>
-        </div>
-      </div>
-
-      <div class="col-xl-8">
+      <div class="col-sm">
         <div class="card">
           <div class="card-body pt-3">
             <!-- Bordered Tabs -->
@@ -49,6 +33,9 @@
             <div class="tab-content pt-2">
               
               <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                <div class="img text-center">
+                  <img @if(isset($data_profil->foto_profil)) src="{{ asset('user/'.$data_profil->foto_profil) }}" @else src="{{ asset('user/blank.jpg') }}" @endif class="rounded-circle" alt="Foto Profil" width="250rem" class="mb-10">
+                </div>
                 <h5 class="card-title">Tentang</h5>
                 <p class="small fst-italic">{{ $data_profil->tentang ?? '-' }}</p>
                 <h5 class="card-title">Detail Profil</h5>

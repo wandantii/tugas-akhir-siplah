@@ -95,7 +95,7 @@
               </div>
 
               <div class="copyright">
-                &copy; Copyright <strong><span>Imam Musthofa</span></strong>
+                &copy; Copyright <strong><span>Imam Musthofa</span></strong>. SPK SIPLah
               </div>
 
             </div>
