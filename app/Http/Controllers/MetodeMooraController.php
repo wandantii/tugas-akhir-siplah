@@ -9,6 +9,7 @@ use App\Models\Supplier;
 use App\Models\Profil;
 use App\Models\Jarak;
 use App\Models\Produk;
+use Session;
 
 class MetodeMooraController extends Controller {
 
@@ -25,7 +26,7 @@ class MetodeMooraController extends Controller {
     $data_kriteria = Kriteria::get();
     $searchProduk = $request->querysearch;
     $searchProduk2 = preg_replace("/[^a-zA-Z0-9]+/", "", $searchProduk);
-    $data_profil = Profil::where('user_id', auth()->user()->user_id)->first();
+    $data_profil = Profil::where('user_id', Session::get('loginId'))->first();
     $kota_user = $data_profil->kota_id;
     $kecamatan_user = $data_profil->kecamatan_id;
     
@@ -36,6 +37,10 @@ class MetodeMooraController extends Controller {
                     ->where('kota_id', $kota_user)
                     ->orderBy('harga', 'ASC')
                     ->get();
+    $data_supplier = Produk::where('nama', 'LIKE', "%$searchProduk%")
+                      ->where('kota_id', $kota_user)
+                      ->groupBy('supplier_id')
+                      ->get('supplier_id');
     $data_jarak = array();
 
     
@@ -63,6 +68,7 @@ class MetodeMooraController extends Controller {
     $optimasi_jt = 0;
 
     $rank = array();
+    $rank_sorted = array();
     $pesan = '';
 
     
@@ -304,15 +310,32 @@ class MetodeMooraController extends Controller {
         $produk->max = $max;
         $produk->min = $min;
 
-        $maxmin = $produk->max-$produk->min;
-        $produk->maxmin = $maxmin;
-        $rank[] = [$produk->produk_id, $maxmin];
+        $rank[] = [$produk->produk_id, $max-$min];
       }
+
+
+      // Menentukan Rank
+      foreach($data_produk as $key=>$produk) {
+        $array_maxmin = array();
+        foreach ($rank as $key => $row) {
+          $array_maxmin[$key] = $row[1];
+        }
+        array_multisort($array_maxmin, SORT_DESC, $rank);
+        
+        foreach($rank as $key=>$value) {
+          if($value[0] == $produk->produk_id) {
+            $produk->rank = $key+1;
+          }
+        }
+      }
+      
+      $rank_sorted = $data_produk->sortBy('rank')->groupBy('supplier.nama');
     }
     // END : Proses Perhitungan
+    // dd($rank_sorted);
     
     return view('admin.metode_moora.hasil', compact(
-      'data_produk', 'data_kriteria', 'rank', 'pesan'
+      'data_produk', 'data_kriteria', 'rank', 'rank_sorted', 'data_supplier', 'pesan'
     ));
   }
 

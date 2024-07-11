@@ -32,6 +32,29 @@
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
   <link href="{{ asset('css/addon.css') }}" rel="stylesheet">
 
+  <style>
+    div.scroll-container {
+      overflow: auto;
+      white-space: nowrap;
+      width:100%;
+    }
+    div.scroll-container div.scroll {
+      display: inline-block;
+    }
+    ::-webkit-scrollbar {
+      height: 3px;
+    }
+    ::-webkit-scrollbar-track {
+      box-shadow: grey; 
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #402c66; 
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #6c4bae; 
+    }
+  </style>
+
   <!-- Untuk AJAX Javascript -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
