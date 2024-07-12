@@ -19,6 +19,7 @@ class CreateUser extends Migration
             $table->string('email')->nullable();
             $table->string('password')->nullable();
             $table->integer('profil_id')->nullable();
+            $table->integer('admin')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             

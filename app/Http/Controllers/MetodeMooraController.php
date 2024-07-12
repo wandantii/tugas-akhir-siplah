@@ -25,7 +25,6 @@ class MetodeMooraController extends Controller {
     // GET Data General
     $data_kriteria = Kriteria::get();
     $searchProduk = $request->querysearch;
-    $searchProduk2 = preg_replace("/[^a-zA-Z0-9]+/", "", $searchProduk);
     $data_profil = Profil::where('user_id', Session::get('loginId'))->first();
     $kota_user = $data_profil->kota_id;
     $kecamatan_user = $data_profil->kecamatan_id;
@@ -309,6 +308,7 @@ class MetodeMooraController extends Controller {
         $min = $produk->op_harga+$produk->op_jarak;
         $produk->max = $max;
         $produk->min = $min;
+        $produk->maxmin = $max-$min;
 
         $rank[] = [$produk->produk_id, $max-$min];
       }

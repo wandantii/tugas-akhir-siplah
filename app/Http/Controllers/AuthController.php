@@ -26,7 +26,7 @@ class AuthController extends Controller {
     if($user) {
       if(Hash::check($request->password, $user->password)) {
         $request->session()->put('loginId', $user->user_id);
-        return redirect('admin');
+        return redirect('/');
       } else {
         return back()->with('error', 'Password tidak sesuai.');
       }
@@ -90,7 +90,7 @@ class AuthController extends Controller {
     $data = array();
     if(Session::has('loginId')) {
       $data = User::where('user_id', '=', Session::get('loginId'))->first();
-      return redirect('admin');
+      return view('front.layout');
     } else {
       return redirect('login');
     }
