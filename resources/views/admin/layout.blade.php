@@ -167,13 +167,13 @@
         </a>
         <ul id="forms-nav" class="nav-content collapse {{ request()->is('admin/metode-moora') | request()->is('admin/metode-bwm') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{ url('admin/metode-moora') }}" class="{{ request()->is('admin/metode-moora') ? 'active' : '' }}">
-              <i class="bi bi-circle"></i><span>Metode MOORA</span>
+            <a href="{{ url('admin/metode-bwm') }}" class="{{ request()->is('admin/metode-bwm') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Metode BWM</span>
             </a>
           </li>
           <li>
-            <a href="{{ url('admin/metode-bwm') }}" class="{{ request()->is('admin/metode-bwm') ? 'active' : '' }}">
-              <i class="bi bi-circle"></i><span>Metode BWM</span>
+            <a href="{{ url('admin/metode-moora') }}" class="{{ request()->is('admin/metode-moora') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Metode MOORA</span>
             </a>
           </li>
         </ul>

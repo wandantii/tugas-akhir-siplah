@@ -26,6 +26,8 @@ class AuthController extends Controller {
     if($user) {
       if(Hash::check($request->password, $user->password)) {
         $request->session()->put('loginId', $user->user_id);
+        $request->session()->put('profilId', $user->profil_id);
+        $request->session()->put('isAdmin', $user->admin);
         return redirect('/');
       } else {
         return back()->with('error', 'Password tidak sesuai.');

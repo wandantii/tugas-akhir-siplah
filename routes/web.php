@@ -11,6 +11,7 @@ use App\Http\Controllers\SatuanProdukController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\KriteriaController;
 use App\Http\Controllers\MetodeMooraController;
+use App\Http\Controllers\MetodeBWMController;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,5 +96,8 @@ Route::group(['middleware' => 'isLoggedIn'], function() {
     Route::get('admin/metode-moora', [MetodeMooraController::class, 'index']);
     Route::post('admin/metode-moora', [MetodeMooraController::class, 'searchPost']);
     Route::get('admin/metode-moora/{id}/detail', [MetodeMooraController::class, 'detail']);
+    Route::get('admin/metode-bwm', [MetodeBWMController::class, 'index']);
+    Route::post('admin/metode-bwm', [MetodeBWMController::class, 'import_excel']);
+    Route::get('admin/metode-bwm/download-template', [MetodeBWMController::class, 'download_template']);
   
 });
