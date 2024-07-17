@@ -17,6 +17,14 @@ class CreateSolver extends Migration
             $table->increments('solver_id');
             $table->string('user_id')->nullable();
             $table->string('profil_id')->nullable();
+            $table->string('c1')->nullable();
+            $table->string('c2')->nullable();
+            $table->string('c3')->nullable();
+            $table->string('c4')->nullable();
+            $table->string('type_c1')->nullable();
+            $table->string('type_c2')->nullable();
+            $table->string('type_c3')->nullable();
+            $table->string('type_c4')->nullable();
             $table->string('best')->nullable();
             $table->string('worst')->nullable();
             $table->string('best_to_c1')->nullable();

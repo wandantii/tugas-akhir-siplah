@@ -88,19 +88,172 @@ class MetodeMooraController extends Controller {
                       ->where('tujuan_kecamatan', '=', $kecamatan_user)
                       ->where('asal_kecamatan', '=', $get_location_supplier)
                       ->first();
+        if($get_jarak->jarak > 0 && $get_jarak->jarak <=10) {
+          $get_jarak->nilai_jarak = 0.14;
+        } else if($get_jarak->jarak > 10 && $get_jarak->jarak <=20) {
+          $get_jarak->nilai_jarak = 0.28;
+        } else if($get_jarak->jarak > 20 && $get_jarak->jarak <=30) {
+          $get_jarak->nilai_jarak = 0.42;
+        } else if($get_jarak->jarak > 30 && $get_jarak->jarak <=40) {
+          $get_jarak->nilai_jarak = 0.56;
+        } else if($get_jarak->jarak > 40 && $get_jarak->jarak <=50) {
+          $get_jarak->nilai_jarak = 0.70;
+        } else if($get_jarak->jarak > 50 && $get_jarak->jarak <=60) {
+          $get_jarak->nilai_jarak = 0.84;
+        } else if($get_jarak->jarak > 60 && $get_jarak->jarak <=70) {
+          $get_jarak->nilai_jarak = 0.98;
+        }
+        // if($get_jarak->jarak > 0 && $get_jarak->jarak <=10) {
+        //   $get_jarak->nilai_jarak = 0.98;
+        // } else if($get_jarak->jarak > 10 && $get_jarak->jarak <=20) {
+        //   $get_jarak->nilai_jarak = 0.84;
+        // } else if($get_jarak->jarak > 20 && $get_jarak->jarak <=30) {
+        //   $get_jarak->nilai_jarak = 0.70;
+        // } else if($get_jarak->jarak > 30 && $get_jarak->jarak <=40) {
+        //   $get_jarak->nilai_jarak = 0.56;
+        // } else if($get_jarak->jarak > 40 && $get_jarak->jarak <=50) {
+        //   $get_jarak->nilai_jarak = 0.42;
+        // } else if($get_jarak->jarak > 50 && $get_jarak->jarak <=60) {
+        //   $get_jarak->nilai_jarak = 0.28;
+        // } else if($get_jarak->jarak > 60 && $get_jarak->jarak <=70) {
+        //   $get_jarak->nilai_jarak = 0.14;
+        // }
         $data_jarak[] = $get_jarak;
         $produk->jarak = $get_jarak;
       }
+      
+
+      // Menentukan nilai harga
+      if($data_produk->count() == 1) {
+        foreach($data_produk as $key=>$produk) {
+          $produk->kategori_harga = "Rata-Rata";
+          $produk->nilai_harga = 0.5;
+        }
+      } else if($data_produk->count() == 2) {
+        $data_awal = $data_produk->take(1);
+        $data_akhir = $data_produk->skip(1)->take(1);
+        foreach($data_produk as $key=>$produk) {
+          foreach($data_awal as $key=>$produk_awal) {
+            if($produk->produk_id == $produk_awal->produk_id) {
+              $produk->kategori_harga = "Murah";
+              $produk->nilai_harga = 1;
+            }
+          }
+          foreach($data_akhir as $key=>$produk_akhir) {
+            if($produk->produk_id == $produk_akhir->produk_id) {
+              $produk->kategori_harga = "Mahal";
+              $produk->nilai_harga = 0.5;
+            }
+          }
+        }
+      } else if($data_produk->count() > 2) {
+        $batas_harga = ceil($data_produk->count()/3);
+        $data_awal = $data_produk->take($batas_harga);
+        $data_tengah = $data_produk->skip($data_awal->count())->take($data_produk->count()-($data_awal->count()*2));
+        $data_akhir = $data_produk->skip($data_awal->count()+$data_tengah->count())->take($batas_harga);
+        foreach($data_produk as $key=>$produk) {
+          foreach($data_awal as $key=>$produk_awal) {
+            if($produk->produk_id == $produk_awal->produk_id) {
+              $produk->kategori_harga = "Murah";
+              $produk->nilai_harga = 0.99;
+            }
+          }
+          foreach($data_tengah as $key=>$produk_tengah) {
+            if($produk->produk_id == $produk_tengah->produk_id) {
+              $produk->kategori_harga = "Rata-Rata";
+              $produk->nilai_harga = 0.66;
+            }
+          }
+          foreach($data_akhir as $key=>$produk_akhir) {
+            if($produk->produk_id == $produk_akhir->produk_id) {
+              $produk->kategori_harga = "Mahal";
+              $produk->nilai_harga = 0.33;
+            }
+          }
+        }
+      }
+
+
+      // Menentukan nilai rating supplier
+      foreach($data_produk as $key=>$produk) {
+        if($produk->supplier->rating > 0 && $produk->supplier-> rating <= 1) {
+          $produk->nilai_rating = 0.2;
+        } else if($produk->supplier->rating > 1 && $produk->supplier-> rating <= 2) {
+          $produk->nilai_rating = 0.4;
+        } else if($produk->supplier->rating > 2 && $produk->supplier-> rating <= 3) {
+          $produk->nilai_rating = 0.6;
+        } else if($produk->supplier->rating > 3 && $produk->supplier-> rating <= 4) {
+          $produk->nilai_rating = 0.8;
+        } else if($produk->supplier->rating > 4 && $produk->supplier-> rating <= 5) {
+          $produk->nilai_rating = 1;
+        }
+      }
+      
+
+      // Menentukan nilai jumlah terjual
+      if($data_produk->count() == 1) {
+        foreach($data_produk as $key=>$produk) {
+          $produk->kategori_jt = "Rata-Rata";
+          $produk->nilai_jt = 0.5;
+        }
+      } else if($data_produk->count() == 2) {
+        $data_awal = $data_produk->take(1);
+        $data_akhir = $data_produk->skip(1)->take(1);
+        foreach($data_produk as $key=>$produk) {
+          foreach($data_awal as $key=>$produk_awal) {
+            if($produk->produk_id == $produk_awal->produk_id) {
+              $produk->kategori_jt = "Sedikit";
+              $produk->nilai_jt = 0.33;
+            }
+          }
+          foreach($data_akhir as $key=>$produk_akhir) {
+            if($produk->produk_id == $produk_akhir->produk_id) {
+              $produk->kategori_jt = "Banyak";
+              $produk->nilai_jt = 0.99;
+            }
+          }
+        }
+      } else if($data_produk->count() > 2) {
+        $batas_harga = ceil($data_produk->count()/3);
+        $data_awal = $data_produk->take($batas_harga);
+        $data_tengah = $data_produk->skip($data_awal->count())->take($data_produk->count()-($data_awal->count()*2));
+        $data_akhir = $data_produk->skip($data_awal->count()+$data_tengah->count())->take($batas_harga);
+        foreach($data_produk as $key=>$produk) {
+          foreach($data_awal as $key=>$produk_awal) {
+            if($produk->produk_id == $produk_awal->produk_id) {
+              $produk->kategori_jt = "Sedikit";
+              $produk->nilai_jt = 0.33;
+            }
+          }
+          foreach($data_tengah as $key=>$produk_tengah) {
+            if($produk->produk_id == $produk_tengah->produk_id) {
+              $produk->kategori_jt = "Rata-Rata";
+              $produk->nilai_jt = 0.66;
+            }
+          }
+          foreach($data_akhir as $key=>$produk_akhir) {
+            if($produk->produk_id == $produk_akhir->produk_id) {
+              $produk->kategori_jt = "Banyak";
+              $produk->nilai_jt = 0.99;
+            }
+          }
+        }
+      }
+
+      // foreach($data_produk as $key=>$produk) {
+      //   echo "<br>".$produk->nama." ".$produk->jarak->nilai_jarak." ".$produk->nilai_harga." ".$produk->nilai_rating." ".$produk->nilai_jt;
+      // }
+
 
 
       // START : Proses Perhitungan
 
       // Normalisasi Matriks
       foreach($data_produk as $key=>$produk) {
-        $pangkat_nilai_jarak = pow($produk->jarak->jarak, 2);   // Memangkatkan nilai jarak
-        $pangkat_nilai_harga = pow($produk->harga, 2);          // Memangkatkan nilai harga
-        $pangkat_nilai_rating = pow($produk->rating, 2);        // Memangkatkan nilai rating
-        $pangkat_nilai_jt = pow($produk->jumlah_terjual, 2);                // Memangkatkan nilai jumlah terjual
+        $pangkat_nilai_jarak = pow($produk->jarak->nilai_jarak, 2);   // Memangkatkan nilai jarak
+        $pangkat_nilai_harga = pow($produk->nilai_harga, 2);          // Memangkatkan nilai harga
+        $pangkat_nilai_rating = pow($produk->nilai_rating, 2);        // Memangkatkan nilai rating
+        $pangkat_nilai_jt = pow($produk->nilai_jt, 2);                // Memangkatkan nilai jumlah terjual
         $array_nilai_jarak[] = $pangkat_nilai_jarak;
         $array_nilai_harga[] = $pangkat_nilai_harga;
         $array_nilai_rating[] = $pangkat_nilai_rating;
@@ -115,7 +268,7 @@ class MetodeMooraController extends Controller {
       foreach($data_kriteria as $key=>$kriteria) {
         if($kriteria->kriteria_id == 1 && $kriteria->nama == $data_solver->c1) {
           foreach($data_produk as $key=>$produk) {
-            $normalisasi_harga = $produk->harga/$bagi_nilai_harga;
+            $normalisasi_harga = $produk->nilai_harga/$bagi_nilai_harga;
             $nm_harga[] = $normalisasi_harga;
             $produk->nm_harga = $normalisasi_harga;
           }
@@ -125,7 +278,7 @@ class MetodeMooraController extends Controller {
 
         if(($kriteria->kriteria_id == 2) && ($kriteria->nama == $data_solver->c2)) {
           foreach($data_produk as $key=>$produk) {
-            $normalisasi_jarak = $produk->jarak->jarak/$bagi_nilai_jarak;
+            $normalisasi_jarak = $produk->jarak->nilai_jarak/$bagi_nilai_jarak;
             $nm_jarak[] = $normalisasi_jarak;
             $produk->nm_jarak = $normalisasi_jarak;
           }
@@ -135,7 +288,7 @@ class MetodeMooraController extends Controller {
         
         if(($kriteria->kriteria_id == 3) && ($kriteria->nama == $data_solver->c3)) {
           foreach($data_produk as $key=>$produk) {
-            $normalisasi_rating = $produk->rating/$bagi_nilai_rating;
+            $normalisasi_rating = $produk->nilai_rating/$bagi_nilai_rating;
             $nm_rating[] = $normalisasi_rating;
             $produk->nm_rating = $normalisasi_rating;
           }
@@ -145,7 +298,7 @@ class MetodeMooraController extends Controller {
         
         if(($kriteria->kriteria_id == 4) && ($kriteria->nama == $data_solver->c4)) {
           foreach($data_produk as $key=>$produk) {
-            $normalisasi_jt = $produk->jumlah_terjual/$bagi_nilai_jt;
+            $normalisasi_jt = $produk->nilai_jt/$bagi_nilai_jt;
             $nm_jt[] = $normalisasi_jt;
             $produk->nm_jt = $normalisasi_jt;
           }
@@ -159,7 +312,7 @@ class MetodeMooraController extends Controller {
       foreach($data_kriteria as $key=>$kriteria) {
         if(($kriteria->kriteria_id == 1) && ($kriteria->nama == $data_solver->c1)) {
           foreach($data_produk as $key=>$produk) {
-            $optimasi_harga =  ($produk->harga/$bagi_nilai_harga)*$data_solver->weight_c1;
+            $optimasi_harga =  ($produk->nilai_harga/$bagi_nilai_harga)*$data_solver->weight_c1;
             $op_harga[] = $optimasi_harga;
             $produk->op_harga = $optimasi_harga;
           }
@@ -169,7 +322,7 @@ class MetodeMooraController extends Controller {
 
         if(($kriteria->kriteria_id == 2) && ($kriteria->nama == $data_solver->c2)) {
           foreach($data_produk as $key=>$produk) {
-            $optimasi_jarak = ($produk->jarak->jarak/$bagi_nilai_jarak)*$data_solver->weight_c2;
+            $optimasi_jarak = ($produk->jarak->nilai_jarak/$bagi_nilai_jarak)*$data_solver->weight_c2;
             $op_jarak[] = $optimasi_jarak;
             $produk->op_jarak = $optimasi_jarak;
           }
@@ -179,7 +332,7 @@ class MetodeMooraController extends Controller {
         
         if(($kriteria->kriteria_id == 3) && ($kriteria->nama == $data_solver->c3)) {
           foreach($data_produk as $key=>$produk) {
-            $optimasi_rating = ($produk->rating/$bagi_nilai_rating)*$data_solver->weight_c3;
+            $optimasi_rating = ($produk->nilai_rating/$bagi_nilai_rating)*$data_solver->weight_c3;
             $op_rating[] = $optimasi_rating;
             $produk->op_rating = $optimasi_rating;
           }
@@ -189,7 +342,7 @@ class MetodeMooraController extends Controller {
         
         if(($kriteria->kriteria_id == 4) && ($kriteria->nama == $data_solver->c4)) {
           foreach($data_produk as $key=>$produk) {
-            $optimasi_jt = ($produk->jumlah_terjual/$bagi_nilai_jt)*$data_solver->weight_c4;
+            $optimasi_jt = ($produk->nilai_jt/$bagi_nilai_jt)*$data_solver->weight_c4;
             $op_jt[] = $optimasi_jt;
             $produk->op_jt = $optimasi_jt;
           }
@@ -228,6 +381,8 @@ class MetodeMooraController extends Controller {
             $min = +$produk->op_jt;
           }
         }
+        // $max = $produk->op_rating+$produk->op_jt;
+        // $min = $produk->op_harga+$produk->op_jarak;
         $produk->max = $max;
         $produk->min = $min;
         $produk->maxmin = $max-$min;
@@ -255,9 +410,6 @@ class MetodeMooraController extends Controller {
     }
     // END : Proses Perhitungan
     // dd($rank_sorted);
-    // foreach($data_produk as $produk) {
-    //   echo $produk->jarak->jarak." ";
-    // }
     // dd($data_produk);
     
     return view('admin.metode_moora.index', compact(

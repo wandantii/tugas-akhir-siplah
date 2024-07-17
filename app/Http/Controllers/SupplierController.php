@@ -9,6 +9,43 @@ use App\Models\Kecamatan;
 use App\Models\Supplier;
 
 class SupplierController extends Controller {
+  
+  public static function getSupplierNama($supplier_id) {
+    $supplier = Supplier::find($supplier_id);
+    return $supplier->nama;
+  }
+
+  public static function getSupplierRating($supplier_id) {
+    $supplier = Supplier::find($supplier_id);
+    return $supplier->rating;
+  }
+  
+  public static function getSupplierJumlah($supplier_id) {
+    $supplier = Supplier::find($supplier_id);
+    return $supplier->jumlah_pesanan_selesai;
+  }
+  
+  public static function getSupplierInstagram($supplier_id) {
+    $supplier = Supplier::find($supplier_id);
+    return $supplier->instagram;
+  }
+  
+  public static function getSupplierEcommerce($supplier_id) {
+    $supplier = Supplier::find($supplier_id);
+    return $supplier->ecommerce;
+  }
+  
+  public static function getSupplierNomor($supplier_id) {
+    $supplier = Supplier::find($supplier_id);
+    return $supplier->nomor_telepon;
+  }
+  
+  public static function getSupplierAlamat($supplier_id) {
+    $supplier = Supplier::with('kota', 'kecamatan')->find($supplier_id);
+    return $supplier->alamat.", ".$supplier->kecamatan->kecamatan.", ".$supplier->kota->kota.", ".$supplier->kode_pos;
+  }
+  
+
 
   public function index() {
     $data = Supplier::with('kecamatan', 'kota')->orderBy('nama', 'ASC')->get();

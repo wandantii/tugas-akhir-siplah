@@ -22,6 +22,11 @@ class Supplier extends Eloquent {
   public function jarak() {
     return $this->hasMany('App\Models\Jarak', 'kecamatan_id', 'asal_kecamatan');
   }
+
+  public function profil() {
+    return $this->hasMany('App\Models\Profil', 'profil_id', 'profil_id');
+  }
+  
   
 }
 
