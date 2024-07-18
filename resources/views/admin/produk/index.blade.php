@@ -25,15 +25,15 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <div class="row" style="padding-top:25px;">
+            <div class="row my-4">
               <div class="col-sm">
-                <a href="{{ url('admin/produk/baru') }}" type="button" style="float:right;" class="btn btn-dark">
-                  <i class="bi bi-plus-circle"></i>
-                  <span>Buat Baru</span>
+                <a href="{{ url('admin/produk/baru') }}" type="button" class="btn btn-primary">
+                  <i class="bi bi-plus"></i>
+                  <span>Buat Data Produk Baru</span>
                 </a>
               </div>
             </div>
-            <div class="row" style="padding-top:25px;">
+            <div class="row">
               <table class="col-sm table datatable">
                 <thead>
                   <tr>

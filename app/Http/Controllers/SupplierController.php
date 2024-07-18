@@ -112,7 +112,7 @@ class SupplierController extends Controller {
     $data = Supplier::find($supplier_id);
     $data_satuan_produk = Produk::where('supplier_id', $supplier_id)->count();
     if($data_satuan_produk > 0) {
-      return redirect('admin/supplier')->with('error', 'Tidak bisa menghapus data! Masih ada Produk yang berasal dari '.$data->nama);
+      return redirect('admin/supplier')->with('error', 'Tidak bisa menghapus data! Masih ada data Produk yang berasal dari Supplier '.$data->nama);
     } else {
       $data->delete();
       return redirect('admin/supplier')->with('success', 'Berhasil menghapus data.');

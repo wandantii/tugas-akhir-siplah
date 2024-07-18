@@ -47,17 +47,17 @@
               <div class="row mb-3">
                 <label for="nama" class="col-sm-2 col-form-label">Nama Kriteria</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="nama" name="nama" @if($keterangan != 'baru') value="{{ $data->nama ?? '' }}" @endif>
+                  <input type="text" class="form-control" id="nama" name="nama" @if($keterangan != 'baru') value="{{ $data->nama ?? '' }}" @endif readonly>
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="tipe" class="col-sm-2 col-form-label">Tipe Kriteria</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="tipe" name="tipe" @if($keterangan != 'baru') value="{{ $data->tipe ?? '' }}" @endif readonly>
-                  <!-- <select class="form-select" aria-label="Default select example" id="tipe" name="tipe">
+                  <!-- <input type="text" class="form-control" id="tipe" name="tipe" @if($keterangan != 'baru') value="{{ $data->tipe ?? '' }}" @endif readonly> -->
+                  <select class="form-select" aria-label="Default select example" id="tipe" name="tipe">
                     <option value="Benefit" @if($keterangan != 'baru') {{ ($data->tipe === 'Benefit') ? 'Selected' : ''}} @endif>Benefit</option>
                     <option value="Cost" @if($keterangan != 'baru') {{ ($data->tipe === 'Cost') ? 'Selected' : ''}} @endif>Cost</option>
-                  </select> -->
+                  </select>
                 </div>
               </div>
               <div class="row mb-3">

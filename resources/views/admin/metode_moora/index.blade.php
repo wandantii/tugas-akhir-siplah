@@ -18,7 +18,7 @@
     <div class="card">
       <div class="card-body">
         <div class="search-bar text-center row py-3">
-          <h5 class="card-title"><strong>CARI BARANG ATAU JASA</strong></h5>
+          <h5 class="card-title">Cari Barang atau Jasa</h5>
           <form class="search col-sm" method="POST" action="{{ url('admin/metode-moora') }}">
           @csrf
             <input type="text" id="querysearch" name="querysearch" placeholder="Cari barang atau jasa" title="Tuliskan keyword" class="addon-search" style="border:1px solid #dee2e6; padding:15px 25px; border-radius:15px 0px 0px 15px; width:90%;" @if(isset($searchProduk)) value="{{$searchProduk}}" @endif>
@@ -45,22 +45,55 @@
     @foreach($rank_sorted as $key=>$sorted)
     <div class="card">
       <div class="card-body">
-        <div class="card-title">
-          <span class="card-title mt-3"><strong>{{ \App\Http\Controllers\SupplierController::getSupplierNama($key) }}</strong></span><br>  
+        <h5 class="card-title pb-0 mb-0">{{ \App\Http\Controllers\SupplierController::getSupplierNama($key) }}</h5>
+        <div class="card-title mt-0 pt-0">
           <span>{{ \App\Http\Controllers\SupplierController::getSupplierAlamat($key) }}</span>
         </div>
         <div class="scroll-container">
           @foreach($sorted as $key=>$produk)
           <div class="scroll mb-3">
-            <div class="mx-2 text-center" style="width:15rem">
-              <img @if(isset($produk->foto_produk)) src="{{ asset('produk/'.$produk->foto_produk) }}" @else src="{{ asset('produk/blank.jpg') }}" @endif alt="Foto Produk" width="100%" style="display:block;">
-              <span class="badge bg-danger block m-2">Rank {{ $produk->rank }}</span>
-              <p class="fw-bold text-dark block" style="white-space:pre-line;line-height:normal;height:30px;">{{ Str::limit($produk->nama, 40) }}</p>
-              <p class="fw-bold text-dark block">{{ $produk->rating }} / 5.00</p>
-              <p class="fw-bold text-dark block">{{ $produk->jumlah_terjual }}</p>
-              <span style="display:block;">Rp {{ number_format($produk->harga, 2, ",", ".") }}</span>
-              <a class="btn btn-primary btn-sm rounded-pill block m-2 px-3" href="{{ url('admin/produk/edit/'.$produk->produk_id) }}" target="_blank">Lihat Produk</a>
-              <a class="btn btn-success btn-sm rounded-pill block m-2 px-3" href="{{ $produk->url }}" target="_blank">Beli</a>
+            <div class="mx-2" style="width:15rem">
+              <div class="text-center">
+                <span class="badge bg-danger block my-2">Rank {{ $produk->rank }}</span>
+                <img @if(isset($produk->foto_produk)) src="{{ asset('produk/'.$produk->foto_produk) }}" @else src="{{ asset('produk/blank.jpg') }}" @endif alt="Foto Produk" width="100%" style="display:block;">
+              </div>
+              <div class="">
+                <p class="fw-bold text-dark block" style="white-space:pre-line;line-height:normal;height:35px;">{{ Str::limit($produk->nama, 41) }}</p>
+                <p class="my-1">Rp {{ number_format($produk->harga) }}</p>
+                <span class="text-warning">
+                  @php $rating = explode('.',$produk->rating) @endphp
+                  @for($i=0; $i<$rating[0]; $i++)
+                    <i class="bi bi-star-fill"></i>
+                  @endfor
+                  @if($rating[0] < 5)
+                  @if($rating[1] > 0)
+                    <i class="bi bi-star-half"></i>
+                  @else
+                    <i class="bi bi-star"></i>
+                  @endif
+                  @endif
+                </span>
+                <span class="text-secondary mx-1">|</span>
+                <span class="text-secondary">
+                  @php
+                    $jumlah_terjual[1] = '';
+                    if($produk->jumlah_terjual > 9999) {
+                      $jumlah_terjual[0] = '10RB+';
+                    } else {
+                      $jumlah_terjual_format = number_format($produk->jumlah_terjual);
+                      $jumlah_terjual = explode(',', $jumlah_terjual_format);
+                      if(isset($jumlah_terjual[1])) {
+                        $jumlah_terjual[1] = ",".str_replace('00', 'RB', $jumlah_terjual[1]);
+                      }
+                    }
+                  @endphp
+                  {{ $jumlah_terjual[0] }}{{ $jumlah_terjual[1] ?? '' }} Terjual
+                </span>
+              </div>
+              <div class="text-center my-2">
+                <a class="btn btn-primary btn-sm rounded-pill block px-3" href="{{ url('admin/produk/edit/'.$produk->produk_id) }}" target="_blank">Lihat Produk</a>
+                <a class="btn btn-danger btn-sm rounded-pill block px-3" href="{{ $produk->url }}" target="_blank"><i class="bi bi-cart-fill"></i></a>
+              </div>
             </div>
           </div>
           @endforeach

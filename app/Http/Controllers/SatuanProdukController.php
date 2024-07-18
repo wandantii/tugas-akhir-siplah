@@ -46,7 +46,7 @@ class SatuanProdukController extends Controller {
     $data = SatuanProduk::find($satuan_produk_id);
     $data_satuan_produk = Produk::where('satuan_produk_id', $satuan_produk_id)->count();
     if($data_satuan_produk > 0) {
-      return redirect('admin/satuanproduk')->with('error', 'Tidak bisa menghapus data! Masih ada Produk yang bekategori '.$data->nama);
+      return redirect('admin/satuanproduk')->with('error', 'Tidak bisa menghapus data! Masih ada data Produk yang satuannya '.$data->nama);
     } else {
       $data->delete();
       return redirect('admin/satuanproduk')->with('success', 'Berhasil menghapus data.');

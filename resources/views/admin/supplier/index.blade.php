@@ -20,40 +20,44 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
       @endif
+      @if(session()->has('error'))
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-1"></i>{{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      @endif
     </div>
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <div class="row" style="padding-top:25px;">
+            <div class="row my-4">
               <div class="col-sm">
-                <a href="{{ url('admin/supplier/baru') }}" type="button" style="float:right;" class="btn btn-dark">
-                  <i class="bi bi-plus-circle"></i>
-                  <span>Buat Baru</span>
+                <a href="{{ url('admin/supplier/baru') }}" type="button" class="btn btn-primary">
+                  <i class="bi bi-plus"></i>
+                  <span>Buat Data Supplier Baru</span>
                 </a>
               </div>
             </div>
-            <div class="row" style="padding-top:25px;">
+            <div class="row">
               <table class="col-sm table datatable addon-table">
                 <thead>
                   <tr>
-                    <th style="width:5%">No.</th>
-                    <th>Nama</th>
-                    <th>Rating</th>
-                    <th>Jumlah Pesanan Selesai</th>
-                    <th>Telp</th>
-                    <th>Alamat</th>
-                    <th>Action</th>
+                    <th style="width:5%;">No.</th>
+                    <th style="width:20%;">Nama</th>
+                    <th style="width:10%;">Rating</th>
+                    <th style="width:15%;">Telp</th>
+                    <th style="width:35%;">Alamat</th>
+                    <th style="width:15%;">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   @foreach($data as $key=>$value)
                   <tr>
-                    <td style="width:5%">{{ ($key+1)."." }}</td>
+                    <td>{{ ($key+1)."." }}</td>
                     <td>{{ $value->nama ?? '' }}</td>
                     <td>{{ $value->rating ?? '' }} / 5.00</td>
-                    <td>{{ $value->jumlah_pesanan_selesai ?? ''}}</td>
-                    <td>{{ $value->nomor_telepon ?? ''}}</td>
+                    <td>0{{ $value->nomor_telepon ?? ''}}</td>
                     <td>{{ $value->alamat ?? ''}}, Kecamatan {{ $value->kecamatan->kecamatan ?? ''}}, {{ $value->kota->kota ?? ''}} {{ $value->kode_pos ?? ''}}</td>
                     <td>
                       <a href="{{ url('admin/supplier/edit/'.$value->supplier_id) }}" type="button" class="btn btn-warning mx-1" style="float:left;"><i class="bi bi-pencil-square"></i></a>

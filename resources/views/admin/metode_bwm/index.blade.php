@@ -15,42 +15,177 @@
   <section class="section">
 
     <div class="card">
-      <div class="card-body row">
-        <div class="col-sm">
-          <p>
-            <strong>Step 1 :</strong> Download template BWM Solver melalui tombol di bawah ini<br>
-            <a class="btn btn-success" href="{{ url('admin/metode-bwm/download-template') }}">Download Template BWM Solver</a><br>
-            <strong>Step 2 :</strong> Pilih <strong>Select the Best</strong> sesuai keinginan<br>
-            <strong>Step 3 :</strong> Pilih <strong>Select the Worst</strong> sesuai keinginan<br>
-            <strong>Step 4 :</strong> Pilih nilai untuk <strong>Best to Others</strong> sesuai keinginan<br>
-            <strong>Step 5 :</strong> Pilih nilai untuk <strong>Others to the Worst</strong> sesuai keinginan<br>
-          </p>
-        </div>
+      <div class="card-body row pb-0">
+        <table class="col-sm m-4">
+          <tr style="vertical-align:top;">
+            <th style="width:13%;">Langkah Pertama</th>
+            <th style="width:2%;">:</th>
+            <td style="width:85%;">
+              Download template BWM Solver melalui tombol di bawah ini.<br>
+              <a class="btn btn-success" href="{{ url('admin/metode-bwm/download-template') }}">Download Template BWM Solver</a><br>
+              Buka dan lakukan penyesuaian. Anda hanya diperbolehkan untuk <strong>mengubah kolom-kolom yang berwarna hijau</strong> saja.
+            </td>
+          </tr>
+          <tr>
+            <th>Langkah Kedua</th>
+            <th>:</th>
+            <td>Pilih <strong>Select the Best</strong> sesuai keinginan.</td>
+          </tr>
+          <tr>
+            <th>Langkah Ketiga</th>
+            <th>:</th>
+            <td>Pilih <strong>Select the Worst</strong> sesuai keinginan</td>
+          </tr>
+          <tr>
+            <th>Langkah Keempat</th>
+            <th>:</th>
+            <td>Pilih nilai untuk <strong>Best to Others</strong> sesuai keinginan</td>
+          </tr>
+          <tr>
+            <th>Langkah Kelima</th>
+            <th>:</th>
+            <td>Pilih nilai untuk <strong>Others to the Worst</strong> sesuai keinginan</td>
+          </tr>
+          <tr>
+            <th>Langkah Keenam</th>
+            <th>:</th>
+            <td>Klik tab <strong>Data</strong> pada menu, kemudian pilih <strong>Solver</strong></td>
+          </tr>
+          <tr>
+            <th>Langkah Ketujuh</th>
+            <th>:</th>
+            <td>Klik <strong>Solver</strong> pada bagian bawah, kemudian pilih <strong>OK</strong></td>
+          </tr>
+          <tr>
+            <th>Langkah kedelapan</th>
+            <th>:</th>
+            <td>Silahkan input file excel yang telah diperbarui sebelumnya pada tombol input di bawah ini, lalu klik <strong>Submit</strong></td>
+          </tr>
+        </table>
       </div>
-    </div><!-- End Search Bar -->
+    </div>
 
     <div class="card">
-      <div class="card-body">
-        <div class="search-bar row py-3">
-          <div class="row mx-3">
-            <form class="row" method="POST" action="{{ url('admin/metode-bwm') }}" enctype="multipart/form-data">
-            @csrf
-              <div class="col-4">
-                <input class="form-control" type="file" id="solver" name="solver">
-              </div>
-              <button class="col-2 btn btn-primary" type="submit" title="Search">Submit</button>
-            </form>
+      <div class="card-body row pb-0">
+        <h5 class="card-title mx-4 mb-0 pb-0">Input Excel BWMSolver</h5>
+        <form class="col-sm m-3" method="POST" action="{{ url('admin/metode-bwm') }}" enctype="multipart/form-data">
+        @csrf
+          <div class="row">
+            <div class="col-4">
+              <input class="form-control" type="file" id="solver" name="solver">
+            </div>
+            <button class="col-2 btn btn-primary" type="submit" title="Search">Submit</button>
+            <small class="text-secondary">*) Pastikan data sudah sesuai dan hanya mengubah kolom berwarna hijau saja</small>
           </div>
-        </div>
+        </form>
       </div>
-    </div><!-- End Search Bar -->
+    </div>
 
     @if(isset($solver))
     <div class="card">
       <div class="card-body">
-        <div class="search-bar text-center row py-3">
-          {{ $solver }}
-        </div>
+        <h5 class="card-title text-center">Metode BWM dengan BWMSolver</h5>
+        <table class="table table-bordered text-center">
+          <tr>
+            <th>Criteria Number</th>
+            <th>Criterion 1</th>
+            <th>Criterion 2</th>
+            <th>Criterion 3</th>
+            <th>Criterion 4</th>
+          </tr>
+          <tr>
+            <th>Names of Criteria</th>
+            <td class="bg-warning">{{ $solver->c1 ?? '' }}</td>
+            <td class="bg-warning">{{ $solver->c2 ?? '' }}</td>
+            <td class="bg-warning">{{ $solver->c3 ?? '' }}</td>
+            <td class="bg-warning">{{ $solver->c4 ?? '' }}</td>
+          </tr>
+          <tr>
+            <th>Code of Criteria</th>
+            <td class="bg-warning">C1</td>
+            <td class="bg-warning">C2</td>
+            <td class="bg-warning">C3</td>
+            <td class="bg-warning">C4</td>
+          </tr>
+          <tr>
+            <th>Types of Criteria</th>
+            <td class="bg-success text-light">{{ $solver->type_c1 ?? '' }}</td>
+            <td class="bg-success text-light">{{ $solver->type_c2 ?? '' }}</td>
+            <td class="bg-success text-light">{{ $solver->type_c3 ?? '' }}</td>
+            <td class="bg-success text-light">{{ $solver->type_c4 ?? '' }}</td>
+          </tr>
+        </table>
+        <table class="table table-bordered text-center" style="width:50%;">
+          <tr>
+            <th style="width:60%;">Best Criteria</th>
+            <td class="bg-success text-light" style="width:40%;">{{ $solver->best ?? '' }}</td>
+          </tr>
+        </table>
+        <table class="table table-bordered text-center" style="width:50%;">
+          <tr>
+            <th style="width:60%;">Worst Criteria</th>
+            <td class="bg-success text-light" style="width:40%;">{{ $solver->worst ?? '' }}</td>
+          </tr>
+        </table>
+        <table class="table table-bordered text-center">
+          <tr>
+            <th>Best to Others</th>
+            <th>{{ $solver->c1 ?? '' }}</th>
+            <th>{{ $solver->c2 ?? '' }}</th>
+            <th>{{ $solver->c3 ?? '' }}</th>
+            <th>{{ $solver->c4 ?? '' }}</th>
+          </tr>
+          <tr>
+            <th>{{ $solver->best ?? '' }}</th>
+            <td class="bg-success text-light">{{ $solver->best_to_c1 ?? '' }}</td>
+            <td class="bg-success text-light">{{ $solver->best_to_c2 ?? '' }}</td>
+            <td class="bg-success text-light">{{ $solver->best_to_c3 ?? '' }}</td>
+            <td class="bg-success text-light">{{ $solver->best_to_c4 ?? '' }}</td>
+          </tr>
+        </table>
+        <table class="table table-bordered text-center" style="width:50%;">
+          <tr>
+            <th>Others to the Worst</th>
+            <th>{{ $solver->worst ?? '' }}</th>
+          </tr>
+          <tr>
+            <th>{{ $solver->c1 ?? '' }}</th>
+            <td class="bg-success text-light">{{ $solver->c1_to_worst ?? '' }}</td>
+          </tr>
+          <tr>
+            <th>{{ $solver->c2 ?? '' }}</th>
+            <td class="bg-success text-light">{{ $solver->c2_to_worst ?? '' }}</td>
+          </tr>
+          <tr>
+            <th>{{ $solver->c3 ?? '' }}</th>
+            <td class="bg-success text-light">{{ $solver->c3_to_worst ?? '' }}</td>
+          </tr>
+          <tr>
+            <th>{{ $solver->c4 ?? '' }}</th>
+            <td class="bg-success text-light">{{ $solver->c4_to_worst ?? '' }}</td>
+          </tr>
+        </table>
+        <table class="table table-bordered text-center">
+          <tr style="vertical-align:middle;">
+            <th rowspan="2">Weights</th>
+            <th>{{ $solver->c1 ?? '' }}</th>
+            <th>{{ $solver->c2 ?? '' }}</th>
+            <th>{{ $solver->c3 ?? '' }}</th>
+            <th>{{ $solver->c4 ?? '' }}</th>
+          </tr>
+          <tr>
+            <td class="bg-warning">{{ $solver->weight_c1 ?? '' }}</td>
+            <td class="bg-warning">{{ $solver->weight_c2 ?? '' }}</td>
+            <td class="bg-warning">{{ $solver->weight_c3 ?? '' }}</td>
+            <td class="bg-warning">{{ $solver->weight_c4 ?? '' }}</td>
+          </tr>
+        </table>
+        <table class="table table-bordered text-center" style="width:50%;">
+          <tr>
+            <th style="width:60%;">Ksi*</th>
+            <td class="bg-warning" style="width:40%;">{{ $solver->ksi ?? '' }}</td>
+          </tr>
+        </table>
       </div>
     </div>
     @endif

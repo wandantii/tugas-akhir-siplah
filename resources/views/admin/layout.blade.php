@@ -51,7 +51,7 @@
       background: #4154f1; 
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #94c0e7; 
+      background: #6776f4; 
     }
   </style>
 
@@ -133,11 +133,11 @@
           <i class="bi bi-menu-button-wide"></i><span>Data Master</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse {{ request()->is('admin/kriteria') | request()->is('admin/supplier') | request()->is('admin/kategoriproduk') | request()->is('admin/satuanproduk') | request()->is('admin/produk') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
-          <li>
+          <!-- <li>
             <a href="{{ url('admin/kriteria') }}" class="{{ request()->is('admin/kriteria') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Kriteria</span>
             </a>
-          </li>
+          </li> -->
           <li>
             <a href="{{ url('admin/supplier') }}" class="{{ request()->is('admin/supplier') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Supplier</span>
