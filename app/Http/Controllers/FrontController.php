@@ -15,21 +15,17 @@ use Session;
 class FrontController extends Controller {
 
   public function dashboard() {
-    $data_profil = Profil::with('user', 'kota', 'kecamatan')->where('user_id',  Session::get('loginId'))->first();
-    $data_profil_latest = Profil::orderBy('profil_id', 'DESC')->first();
-    $data_kota = Kota::orderBy('kota', 'ASC')->get();
-    $data_kecamatan = Kecamatan::orderBy('kecamatan', 'ASC')->get();
-    
-      return view('front.home.index', compact('data_profil', 'data_profil_latest', 'data_kota', 'data_kecamatan'));
+    return view('front.home.index');
   }
 
   public function profil() {
+    $data_user = User::where('user_id',  Session::get('loginId'))->first();
     $data_profil = Profil::with('user', 'kota', 'kecamatan')->where('user_id',  Session::get('loginId'))->first();
     $data_profil_latest = Profil::orderBy('profil_id', 'DESC')->first();
     $data_kota = Kota::orderBy('kota', 'ASC')->get();
     $data_kecamatan = Kecamatan::orderBy('kecamatan', 'ASC')->get();
     
-    return view('front.profil.index', compact('data_profil', 'data_profil_latest', 'data_kota', 'data_kecamatan'));
+    return view('front.profil.index', compact('data_profil', 'data_user', 'data_profil_latest', 'data_kota', 'data_kecamatan'));
   }
 
   public function store(Request $request) {

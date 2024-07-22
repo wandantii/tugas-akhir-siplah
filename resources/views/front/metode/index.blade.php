@@ -76,8 +76,8 @@
     </div>
   </section>
 
-  <section id="" class="row" style="background:#fafbff;">
-    <div class="col-sm">
+  <section id="" class="" style="background:#fafbff;">
+    <div class="">
       <div class="container">
         <div class="row justify-content-center">
           <header class="section-header">
@@ -87,8 +87,8 @@
           <div class="col-lg-6">
             <form class="row p-0" method="POST" action="{{ url('metode-bwm') }}" enctype="multipart/form-data">
             @csrf
-              <input class="form-control" style="border:none;border-radius:0px;width:70%;float:left;" type="file" id="solver" name="solver">
-              <button class="btn btn-primary" style="border:none;border-radius:0px;width:30%;float:right;" type="submit" title="Search">Submit</button>
+              <input class="form-control" style="border-radius:0px;width:70%;float:left;" type="file" id="solver" name="solver">
+              <button class="btn btn-primary" style="border-radius:0px;width:30%;float:right;" type="submit" title="Search">Submit</button>
             </form>
           </div>
         </div>
