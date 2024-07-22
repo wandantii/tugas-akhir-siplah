@@ -17,6 +17,7 @@ class CreateProfil extends Migration
             $table->increments('profil_id');
             $table->integer('user_id')->nullable();
             $table->string('tentang')->nullable();
+            $table->string('nomor_telepon')->nullable();
             $table->string('foto_profil')->nullable();
             $table->string('alamat')->nullable();
             $table->integer('kecamatan_id')->nullable();

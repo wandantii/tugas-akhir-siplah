@@ -5,8 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Alternatif;
-use App\Models\Kriteria;
-use App\Models\Supplier;
+use App\Models\Kecamatan;
+use App\Models\Kota;
 use App\Models\User;
 use App\Models\Profil;
 use Session;
@@ -84,16 +84,6 @@ class AuthController extends Controller {
     // return redirect('login')->with('success', 'Logout berhasil! Silahkan login.');
     if(Session::has('loginId')) {
       Session::pull('loginId');
-      return redirect('login');
-    }
-  }
-
-  public function dashboard() {
-    $data = array();
-    if(Session::has('loginId')) {
-      $data = User::where('user_id', '=', Session::get('loginId'))->first();
-      return view('front.layout');
-    } else {
       return redirect('login');
     }
   }

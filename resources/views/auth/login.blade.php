@@ -39,12 +39,10 @@
           <div class="row justify-content-center">
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
               
-              <div class="d-flex align-items-center justify-content-between">
-                <a href="{{ url('login') }}" class="logo d-flex align-items-center">
-                  <img src="{{ asset('img/logo.png') }}" alt="">
-                  <span class="d-none d-lg-block">SIPLah</span>
-                </a>
-                <i class="bi bi-list toggle-sidebar-btn"></i>
+              <div class="d-flex justify-content-center py-4">
+                <span class="logo d-flex align-items-center w-auto">
+                  <h3 class="d-none d-lg-block">SPK SIPLah</h3>
+                </span>
               </div><!-- End Logo -->
 
               @if(session()->has('success'))

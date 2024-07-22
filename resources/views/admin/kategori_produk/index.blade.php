@@ -35,7 +35,7 @@
               <div class="col-sm">
                 <a href="{{ url('admin/kategoriproduk/baru') }}" type="button" class="btn btn-primary">
                   <i class="bi bi-plus"></i>
-                  <span>Buat Data Kategori Produk #mainBaru</span>
+                  <span>Buat Data Kategori Produk Baru</span>
                 </a>
               </div>
             </div>

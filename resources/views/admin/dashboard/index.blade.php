@@ -83,6 +83,12 @@
                     </div>
                   </div>
                   <div class="row mb-3">
+                    <label for="nomor_telepon" class="col-sm-2 col-form-label">Nomor Telepon</label>
+                    <div class="col-sm-10">
+                      <input name="nomor_telepon" type="text" class="form-control" id="nomor_telepon" value="{{ $data_profil->nomor_telepon ?? '' }}">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
                     <label for="tentang" class="col-sm-2 col-form-label">Tentang</label>
                     <div class="col-sm-10">
                       <textarea name="tentang" class="form-control" id="tentang" style="height:100px">{{ $data_profil->tentang ?? '' }}</textarea>

@@ -104,7 +104,7 @@
                 @csrf
                 <button class="dropdown-item d-flex align-items-center" type="submit">
                   <i class="bi bi-box-arrow-right"></i>
-                  <span>Sign Out</span>
+                  <span>LogOut</span>
                 </button>
               </form>
             </li>

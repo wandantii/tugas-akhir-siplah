@@ -22,7 +22,7 @@ class MetodeMooraController extends Controller {
       $message['data_solver'] = "Ups! Mohon maaf. Silahkan isikan data Metode BWM terlebih dahulu sesuai prosedur perhitungan pada sistem, agar mendapatkan hasil (output) alternatif yang sesuai. Terima kasih.";
     }
 
-    return view('admin.metode_moora.index', compact(
+    return view('front.hasil.index', compact(
       'data_solver', 'message'
     ));
   }
@@ -260,7 +260,7 @@ class MetodeMooraController extends Controller {
     // }
     // dd($data_produk);
     
-    return view('admin.metode_moora.index', compact(
+    return view('front.hasil.index', compact(
       'data_produk', 'data_kriteria', 'rank', 'rank_sorted', 'searchProduk', 'data_supplier', 'message', 'data_solver',
       'bagi_nilai_jarak', 'bagi_nilai_harga', 'bagi_nilai_rating', 'bagi_nilai_jt'
     ));

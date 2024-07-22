@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\APIController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FrontController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\KategoriProdukController;
 use App\Http\Controllers\SatuanProdukController;
@@ -23,9 +24,6 @@ use App\Http\Controllers\MetodeBWMController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::get('/', function () {
-//     return view('admin/layout');
-// });
 
 
 /* API */
@@ -40,15 +38,27 @@ Route::post('login/store', [AuthController::class, 'loginStore']);
 Route::post('register/store', [AuthController::class, 'registerStore']);
 Route::post('logout', [AuthController::class, 'logout']);
 
+/* Dashboard */
+Route::get('/', [FrontController::class, 'dashboard'])->middleware('guest');;
+
+
 Route::group(['middleware' => 'isLoggedIn'], function() {
 
-  /* Dashboard */
-  Route::get('/', [AuthController::class, 'dashboard']);
+    /* Dashboard */
+    Route::get('profil', [FrontController::class, 'profil']);
+    Route::post('profil/store', [FrontController::class, 'store']);
+    Route::put('profil/update/{id}', [FrontController::class, 'update']);
+    Route::get('metode', [FrontController::class, 'metode']);
+    Route::get('hasil', [MetodeMooraController::class, 'index']);
+    Route::post('hasil', [MetodeMooraController::class, 'searchPost']);
+    Route::get('metode-bwm', [MetodeBWMController::class, 'index']);
+    Route::post('metode-bwm', [MetodeBWMController::class, 'import_excel']);
+    Route::get('metode-bwm/download-template', [MetodeBWMController::class, 'download_template']);
+
 
   
     /* Admin */
     Route::get('admin', [AdminController::class, 'index']);
-    // Route::get('admin', function () { return view('admin/layout'); });
     Route::post('admin/profil/store', [AdminController::class, 'store']);
     Route::put('admin/profil/update/{id}', [AdminController::class, 'update']);
 
@@ -93,11 +103,10 @@ Route::group(['middleware' => 'isLoggedIn'], function() {
     Route::delete('admin/produk/delete/{id}', [ProdukController::class, 'delete']);
 
     /* Admin - Penilaian */
-    Route::get('admin/metode-moora', [MetodeMooraController::class, 'index']);
-    Route::post('admin/metode-moora', [MetodeMooraController::class, 'searchPost']);
-    Route::get('admin/metode-moora/{id}/detail', [MetodeMooraController::class, 'detail']);
-    Route::get('admin/metode-bwm', [MetodeBWMController::class, 'index']);
-    Route::post('admin/metode-bwm', [MetodeBWMController::class, 'import_excel']);
-    Route::get('admin/metode-bwm/download-template', [MetodeBWMController::class, 'download_template']);
+    // Route::get('admin/metode-moora', [MetodeMooraController::class, 'index']);
+    // Route::post('admin/metode-moora', [MetodeMooraController::class, 'searchPost']);
+    // Route::get('admin/metode-bwm', [MetodeBWMController::class, 'index']);
+    // Route::post('admin/metode-bwm', [MetodeBWMController::class, 'import_excel']);
+    // Route::get('admin/metode-bwm/download-template', [MetodeBWMController::class, 'download_template']);
   
 });
