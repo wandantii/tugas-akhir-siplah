@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Alternatif;
 use App\Models\Kecamatan;
+use App\Models\KategoriProduk;
+use App\Models\SatuanProduk;
 use App\Models\Kota;
 use App\Models\User;
 use App\Models\Profil;
@@ -68,9 +70,11 @@ class FrontController extends Controller {
   }
 
   public function metode() {
+    $data_kategori_produk = KategoriProduk::orderBy('kategori_produk', 'ASC')->get();
+    $data_satuan_produk = SatuanProduk::orderBy('nama', 'ASC')->get();
     $solver = Solver::where('user_id', Session::get('loginId'))->first();
     return view('front.metode.index', compact(
-      'solver'
+      'solver', 'data_kategori_produk', 'data_satuan_produk'
     ));
   }
 

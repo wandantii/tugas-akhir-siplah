@@ -46,12 +46,40 @@
   @endif
 
   @if(isset($data_produk))
-  <section id="" class="">
+  <section id="" class="mx-5">
+    <div class="px-3" style="width:15%; float:left;">
+      <form class="search row" method="POST" action="{{ url('hasil') }}">
+        @csrf
+        <div class="col-sm">
+          <input type="hidden" id="querysearch" name="querysearch" placeholder="Cari barang atau jasa" title="Tuliskan keyword" class="addon-search" style="border:1px solid #dee2e6; padding:15px 25px; width:100%;" @if(isset($searchProduk)) value="{{$searchProduk}}" @endif>
+          <div class="">
+            <h6 for="request_kt" class="fw-bold m-0 p-0" style="color:#012970;">Kategori Produk</h6>
+            @foreach($data_kategori_produk as $key=>$kategori_produk)
+              <input type="checkbox" id="request_kt{{ $key }}" value="{{ $kategori_produk->kategori_produk_id }}" name="request_kt[]"
+              @if(in_array($kategori_produk->kategori_produk_id, $find_kt)) checked="" @endif>
+              <label for="request_kt{{ $key }}">&nbsp; {{ $kategori_produk->sub_kategori_produk }}</label><br>
+            @endforeach
+          </div>
+          <div class="my-4">
+            <h6 for="request_st" class="fw-bold m-0 p-0" style="color:#012970;">Satuan Produk</h6>
+            @foreach($data_satuan_produk as $key=>$satuan_produk)
+              <input type="checkbox" id="request_st{{ $key }}" value="{{ $satuan_produk->satuan_produk_id }}" name="request_st[]"
+              @if(in_array($satuan_produk->satuan_produk_id, $find_st)) checked="" @endif>
+              <label for="request_st{{ $key }}">&nbsp; {{ $satuan_produk->nama }}</label><br>
+            @endforeach
+          </div>
+          <div class="">
+            <button type="submit" title="Search" style="border:1px solid #5667f2; background-color:#5667f2; color:#fff; box-shadow: 0 0 10px 0 rgba(1, 41, 112, 0.15); width:100%; border-radius:10px;"><i class="bi bi-search"></i> Filter</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    
     @foreach($rank_sorted as $key=>$sorted)
-    <div class="container mb-5" data-aos="fade-up">
+    <div class="container mb-5" style="width:85%; float:right;" data-aos="fade-up">
       <div class="card">
         <header class="section-header p-0 my-3">
-          <p>{{ \App\Http\Controllers\SupplierController::getSupplierNama($key) }}</p>
+          <p class="my-1">{{ \App\Http\Controllers\SupplierController::getSupplierNama($key) }}</p>
           <h2>{{ \App\Http\Controllers\SupplierController::getSupplierAlamat($key) }}</h2>
         </header>
         <div class="card-body">

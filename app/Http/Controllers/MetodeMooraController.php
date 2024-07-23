@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Alternatif;
 use App\Models\Kriteria;
 use App\Models\Supplier;
+use App\Models\KategoriProduk;
+use App\Models\SatuanProduk;
 use App\Models\Solver;
 use App\Models\Profil;
 use App\Models\Jarak;
@@ -35,6 +37,12 @@ class MetodeMooraController extends Controller {
 
   public function searchPost(Request $request) {
     // GET Data General
+    $request_kt = '';
+    $find_kt = array();
+    $request_st = '';
+    $find_st = array();
+    $data_kategori_produk = KategoriProduk::orderBy('kategori_produk', 'ASC')->get();
+    $data_satuan_produk = SatuanProduk::orderBy('nama', 'ASC')->get();
     $data_kriteria = Kriteria::get();
     $searchProduk = $request->querysearch;
     $data_solver = Solver::where('user_id', Session::get('loginId'))->first();
@@ -44,9 +52,33 @@ class MetodeMooraController extends Controller {
     
     
     // Get data PRODUK
+    if(!empty($request->input('request_kt'))) {
+      $request_kt = join(',', $request->input('request_kt'));
+      $find_kt = explode(',', $request_kt);
+    } else {
+      $request_kt = '';
+    }
+
+    if(!empty($request->input('request_st'))) {
+      $request_st = join(',', $request->input('request_st'));
+      $find_st = explode(',', $request_st);
+    } else {
+      $request_st = '';
+    }
+
     $data_produk = Produk::with('supplier', 'kategori_produk')
                     ->where('nama', 'LIKE', "%$searchProduk%")
                     ->where('kota_id', $kota_user)
+                    ->where(function ($q) use ($find_kt) {
+                      foreach ($find_kt as $value) {
+                        $q->orWhere('kategori_produk_id', $value);
+                      }
+                    })
+                    ->where(function ($q) use ($find_st) {
+                      foreach ($find_st as $value) {
+                        $q->orWhere('satuan_produk_id', $value);
+                      }
+                    })
                     ->orderBy('harga', 'ASC')
                     ->get();
     $data_supplier = Produk::where('nama', 'LIKE', "%$searchProduk%")
@@ -275,7 +307,7 @@ class MetodeMooraController extends Controller {
     } else {
       return view('front.hasil.index', compact(
         'data_produk', 'data_kriteria', 'rank', 'rank_sorted', 'searchProduk', 'data_supplier', 'message', 'data_solver',
-        'bagi_nilai_jarak', 'bagi_nilai_harga', 'bagi_nilai_rating', 'bagi_nilai_jt'
+        'bagi_nilai_jarak', 'bagi_nilai_harga', 'bagi_nilai_rating', 'bagi_nilai_jt', 'data_kategori_produk', 'data_satuan_produk', 'find_kt', 'find_st'
       ));
     }
   }
