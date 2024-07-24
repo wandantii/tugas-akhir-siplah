@@ -24,11 +24,16 @@
             <input type="text" id="querysearch" name="querysearch" placeholder="Cari barang atau jasa" title="Tuliskan keyword" class="addon-search" style="border:1px solid #dee2e6; padding:15px 25px; border-radius:15px 0px 0px 15px; width:90%;" @if(isset($searchProduk)) value="{{$searchProduk}}" @endif>
             <button type="submit" title="Search" style="border:1px solid #5667f2; padding:15px 25px; border-radius:0px 15px 15px 0px; background-color:#5667f2; color:#fff; box-shadow: 0 0 10px 0 rgba(1, 41, 112, 0.15);"><i class="bi bi-search"></i></button>
           </form>
-          @if(isset($data_produk))
+          @if(count($data_produk) > 0)
           <hr class="my-5">
           <button type="button" class="btn btn-primary col-2 m-auto" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">
             Lihat Perhitungan
           </button>
+          @else
+          <hr class="my-5">
+          <div class="text-center">
+            {{ $message['data_produk'] }}
+          </div>
           @endif
         </div>
       </div>
@@ -41,7 +46,7 @@
     </div>
     @endif
 
-    @if(isset($data_produk))
+    @if(count($data_produk) > 0)
     @foreach($rank_sorted as $key=>$sorted)
     <div class="card">
       <div class="card-body">

@@ -34,8 +34,8 @@
   @endif
 
   
-  @if(isset($data_produk))
-  <section id="" class="m-0 p-0 row">
+  @if(isset($data_produk) && count($data_produk) > 0 && empty($message))
+  <section id="" class="m-0 mb-5 p-0 row">
     <div class="container text-center col-8 mx-auto" data-aos="fade-up">
       <small>Terima kasih sudah menggunakan SIPLah kami, untuk memberi tahu rekomendasi produk ini kami menggunakan Metode BWM dan Metode MOORA dalam proses pencariannya. Jika ingin mengetahui mengenai proses perhitungan, silahkan tekan tombol di bawah ini.</small>
       <button type="button" class="btn btn-success" style="width:100%;" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">
@@ -45,8 +45,8 @@
   </section>
   @endif
 
-  @if(isset($data_produk))
-  <section id="" class="mx-5">
+  @if(isset($data_produk) && count($data_produk) > 0 && empty($message))
+  <section id="" class="mx-5 p-0">
     <div class="px-3" style="width:15%; float:left;">
       <form class="search row" method="POST" action="{{ url('hasil') }}">
         @csrf
@@ -137,6 +137,16 @@
     </div>
     @endforeach
   </section>
+  @else
+  <section class="text-center m-0 p-0 mb-5">
+    <div class="container" data-aos="fade-up">
+      <p>{{ $message['data_produk'] ?? '' }}</p>
+      <p>{{ $message['error_c1'] ?? '' }}</p>
+      <p>{{ $message['error_c2'] ?? '' }}</p>
+      <p>{{ $message['error_c3'] ?? '' }}</p>
+      <p>{{ $message['error_c4'] ?? '' }}</p>
+    </div>
+  </section>
   @endif
 
 </main><!-- End #main -->
@@ -156,9 +166,10 @@
           <div class="card col-sm">
             <div class="card-body">
               <h5><b>Dengan keterangan sebagai berikut</b></h5>
-              @foreach($data_kriteria as $key=>$kriteria)
-              <span>C{{ $key+1 }} : {{ $kriteria->nama ?? ''}}</span><br>
-              @endforeach
+              <span>C1 : {{ $data_solver->c1 ?? ''}}</span><br>
+              <span>C2 : {{ $data_solver->c2 ?? ''}}</span><br>
+              <span>C3 : {{ $data_solver->c3 ?? ''}}</span><br>
+              <span>C4 : {{ $data_solver->c4 ?? ''}}</span><br>
             </div>
           </div>
         </div>
