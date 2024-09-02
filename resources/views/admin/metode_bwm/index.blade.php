@@ -18,9 +18,9 @@
       <div class="card-body row pb-0">
         <table class="col-sm m-4">
           <tr style="vertical-align:top;">
-            <th style="width:13%;">Langkah Pertama</th>
+            <th style="width:18%;">Langkah Pertama</th>
             <th style="width:2%;">:</th>
-            <td style="width:85%;">
+            <td style="width:80%;">
               Download template BWM Solver melalui tombol di bawah ini.<br>
               <a class="btn btn-success" href="{{ url('admin/metode-bwm/download-template') }}">Download Template BWM Solver</a><br>
               Buka dan lakukan penyesuaian. Anda hanya diperbolehkan untuk <strong>mengubah kolom-kolom yang berwarna hijau</strong> saja.

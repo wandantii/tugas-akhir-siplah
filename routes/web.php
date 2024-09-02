@@ -11,7 +11,8 @@ use App\Http\Controllers\KategoriProdukController;
 use App\Http\Controllers\SatuanProdukController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\KriteriaController;
-use App\Http\Controllers\MetodeMooraController;
+use App\Http\Controllers\MetodeMOORAController;
+use App\Http\Controllers\HasilController;
 use App\Http\Controllers\MetodeBWMController;
 
 /*
@@ -48,12 +49,18 @@ Route::group(['middleware' => 'isLoggedIn'], function() {
     Route::get('profil', [FrontController::class, 'profil']);
     Route::post('profil/store', [FrontController::class, 'store']);
     Route::put('profil/update/{id}', [FrontController::class, 'update']);
-    Route::get('metode', [FrontController::class, 'metode']);
-    Route::get('hasil', [MetodeMooraController::class, 'index']);
-    Route::post('hasil', [MetodeMooraController::class, 'searchPost']);
-    Route::get('metode-bwm', [MetodeBWMController::class, 'index']);
-    Route::post('metode-bwm', [MetodeBWMController::class, 'import_excel']);
-    Route::get('metode-bwm/download-template', [MetodeBWMController::class, 'download_template']);
+
+    // Route::get('metode', [FrontController::class, 'metode']);
+
+    Route::get('hasil', [HasilController::class, 'index']);
+    Route::post('hasil', [HasilController::class, 'searchPost']);
+    
+    Route::get('metodemoora', [MetodeMOORAController::class, 'index']);
+    Route::post('metodemoora', [MetodeMOORAController::class, 'searchPost']);
+    
+    Route::get('metodebwm', [MetodeBWMController::class, 'index']);
+    Route::post('metodebwm', [MetodeBWMController::class, 'import_excel']);
+    Route::get('metodebwm/download-template', [MetodeBWMController::class, 'download_template']);
 
 
   
@@ -104,11 +111,11 @@ Route::group(['middleware' => 'isLoggedIn'], function() {
         Route::delete('admin/produk/delete/{id}', [ProdukController::class, 'delete']);
 
         /* Admin - Penilaian */
-        Route::get('admin/metode-moora', [MetodeMooraController::class, 'index']);
-        Route::post('admin/metode-moora', [MetodeMooraController::class, 'searchPost']);
-        Route::get('admin/metode-bwm', [MetodeBWMController::class, 'index']);
-        Route::post('admin/metode-bwm', [MetodeBWMController::class, 'import_excel']);
-        Route::get('admin/metode-bwm/download-template', [MetodeBWMController::class, 'download_template']);    
+        // Route::get('admin/metode-moora', [MetodeMOORAController::class, 'index']);
+        // Route::post('admin/metode-moora', [MetodeMOORAController::class, 'searchPost']);
+        // Route::get('admin/metode-bwm', [MetodeBWMController::class, 'index']);
+        // Route::post('admin/metode-bwm', [MetodeBWMController::class, 'import_excel']);
+        // Route::get('admin/metode-bwm/download-template', [MetodeBWMController::class, 'download_template']);
     });
 
 });

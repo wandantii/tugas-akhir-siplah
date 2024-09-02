@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Imports\SolverImport;
 use App\Models\Alternatif;
 use App\Models\Kriteria;
 use App\Models\Supplier;
@@ -14,28 +16,43 @@ use App\Models\Jarak;
 use App\Models\Produk;
 use Session;
 
-class MetodeMooraController extends Controller {
+class HasilController extends Controller {
 
   public function index() {
     $data_solver = Solver::where('user_id', Session::get('loginId'))->first();
+    $data_profil = Profil::where('user_id', Session::get('loginId'))->first();
     $message = array();
     
     $data_kategori_produk = KategoriProduk::orderBy('kategori_produk', 'ASC')->get();
     $data_satuan_produk = SatuanProduk::orderBy('nama', 'ASC')->get();
     
-    if(!isset($data_solver)) {
-      $message['data_solver'] = "Ups! Mohon maaf. Silahkan isikan data Metode BWM terlebih dahulu sesuai prosedur perhitungan pada sistem, agar mendapatkan hasil (output) alternatif yang sesuai. Terima kasih.";
+    if(!isset($data_profil)) {
+      $message['data_profil'] = "Ups! Mohon maaf. Silahkan isikan data Profil terlebih dahulu sesuai prosedur perhitungan pada sistem, agar mendapatkan hasil (output) alternatif yang sesuai. Terima kasih.";
     }
     
     if(str_contains(url()->current(), 'admin')) {
       return view('admin.metode_moora.index', compact(
-        'data_solver', 'message', 'data_kategori_produk', 'data_satuan_produk'
+        'data_solver', 'data_profil', 'message', 'data_kategori_produk', 'data_satuan_produk'
       ));
     } else {
-      return view('front.metode_moora.index', compact(
-        'data_solver', 'message', 'data_kategori_produk', 'data_satuan_produk'
+      return view('front.hasil.index', compact(
+        'data_solver', 'data_profil', 'message', 'data_kategori_produk', 'data_satuan_produk'
       ));
     }
+  }
+
+  public function import_excel(Request $request) {
+    $data = $request->file('solver');
+
+    $namafile = Session::get('loginId')."_".$data->getClientOriginalName();
+    $data->move('solver', $namafile);
+
+    Excel::import(new SolverImport, \public_path('/solver/'.$namafile));
+    return redirect()->back();
+  }
+
+  public function download_template() {
+    return response()->download(storage_path('template\BWMSolver.xlsx'));
   }
 
   public function searchPost(Request $request) {
@@ -295,7 +312,7 @@ class MetodeMooraController extends Controller {
         'bagi_nilai_jarak', 'bagi_nilai_harga', 'bagi_nilai_rating', 'bagi_nilai_jt'
       ));
     } else {
-      return view('front.metode_moora.index', compact(
+      return view('front.hasil.index', compact(
         'data_produk', 'data_kriteria', 'rank', 'rank_sorted', 'searchProduk', 'data_supplier', 'message', 'data_solver',
         'bagi_nilai_jarak', 'bagi_nilai_harga', 'bagi_nilai_rating', 'bagi_nilai_jt', 'data_kategori_produk', 'data_satuan_produk', 'find_kt', 'find_st'
       ));

@@ -3,6 +3,20 @@
 
 <main id="main" class="pt-5">
 
+@if(!isset($data_profil))
+
+  <section id="" class="mt-3">
+    <div class="container" data-aos="fade-up">
+      <header class="section-header">
+        <h2>Metode Best-Worst Method</h2>
+        <p>Aduh! Maaf ya...</p>
+        <small>{{ $message['data_profil'] ?? '' }}</small>
+      </div>
+    </div>
+  </section>
+
+@else
+
   <section id="values" class="values mt-3">
     <div class="container" data-aos="fade-up">
       <header class="section-header">
@@ -15,7 +29,7 @@
           <div class="box">
             <h3>Step 1</h3>
             <p class="pb-0 mb-0">Download template BWM Solver melalui tombol di bawah ini</p>
-            <a class="btn btn-success mt-0" href="{{ url('admin/metode-bwm/download-template') }}">Download Template BWM Solver</a>
+            <a class="btn btn-success mt-0" href="{{ url('metodebwm/download-template') }}">Download Template BWM Solver</a>
           </div>
         </div>
         <div class="col-6 col-lg-6 col-md-12" data-aos="fade-up" data-aos-delay="200">
@@ -85,7 +99,7 @@
             <small class="text-secondary">Pastikan excel yang Anda ubah sudah sesuai keperluan dan ketentuan sistem<br>Hal ini diperlukan agar sistem bisa melakukan perhitungan dan menampilkan produk yang sesuai</small>
           </header>
           <div class="col-lg-6">
-            <form class="row p-0" method="POST" action="{{ url('metode-bwm') }}" enctype="multipart/form-data">
+            <form class="row p-0" method="POST" action="{{ url('metodebwm') }}" enctype="multipart/form-data">
             @csrf
               <input class="form-control" style="border-radius:0px;width:70%;float:left;" type="file" id="solver" name="solver">
               <button class="btn btn-primary" style="border-radius:0px;width:30%;float:right;" type="submit" title="Search">Submit</button>
@@ -96,7 +110,7 @@
     </div>
   </section>
   
-  @if(isset($solver))
+  @if(isset($data_solver))
   <section id="values" class="values">
     <div class="container" data-aos="fade-up">
       <header class="section-header">
@@ -116,10 +130,10 @@
               </tr>
               <tr>
                 <th>Names of Criteria</th>
-                <td class="bg-warning">{{ $solver->c1 ?? '' }}</td>
-                <td class="bg-warning">{{ $solver->c2 ?? '' }}</td>
-                <td class="bg-warning">{{ $solver->c3 ?? '' }}</td>
-                <td class="bg-warning">{{ $solver->c4 ?? '' }}</td>
+                <td class="bg-warning">{{ $data_solver->c1 ?? '' }}</td>
+                <td class="bg-warning">{{ $data_solver->c2 ?? '' }}</td>
+                <td class="bg-warning">{{ $data_solver->c3 ?? '' }}</td>
+                <td class="bg-warning">{{ $data_solver->c4 ?? '' }}</td>
               </tr>
               <tr>
                 <th>Code of Criteria</th>
@@ -130,81 +144,81 @@
               </tr>
               <tr>
                 <th>Types of Criteria</th>
-                <td class="bg-success text-light">{{ $solver->type_c1 ?? '' }}</td>
-                <td class="bg-success text-light">{{ $solver->type_c2 ?? '' }}</td>
-                <td class="bg-success text-light">{{ $solver->type_c3 ?? '' }}</td>
-                <td class="bg-success text-light">{{ $solver->type_c4 ?? '' }}</td>
+                <td class="bg-success text-light">{{ $data_solver->type_c1 ?? '' }}</td>
+                <td class="bg-success text-light">{{ $data_solver->type_c2 ?? '' }}</td>
+                <td class="bg-success text-light">{{ $data_solver->type_c3 ?? '' }}</td>
+                <td class="bg-success text-light">{{ $data_solver->type_c4 ?? '' }}</td>
               </tr>
             </table>
             <table class="table table-bordered text-center" style="width:50%;">
               <tr>
                 <th style="width:60%;">Best Criteria</th>
-                <td class="bg-success text-light" style="width:40%;">{{ $solver->best ?? '' }}</td>
+                <td class="bg-success text-light" style="width:40%;">{{ $data_solver->best ?? '' }}</td>
               </tr>
             </table>
             <table class="table table-bordered text-center" style="width:50%;">
               <tr>
                 <th style="width:60%;">Worst Criteria</th>
-                <td class="bg-success text-light" style="width:40%;">{{ $solver->worst ?? '' }}</td>
+                <td class="bg-success text-light" style="width:40%;">{{ $data_solver->worst ?? '' }}</td>
               </tr>
             </table>
             <table class="table table-bordered text-center">
               <tr>
                 <th>Best to Others</th>
-                <th>{{ $solver->c1 ?? '' }}</th>
-                <th>{{ $solver->c2 ?? '' }}</th>
-                <th>{{ $solver->c3 ?? '' }}</th>
-                <th>{{ $solver->c4 ?? '' }}</th>
+                <th>{{ $data_solver->c1 ?? '' }}</th>
+                <th>{{ $data_solver->c2 ?? '' }}</th>
+                <th>{{ $data_solver->c3 ?? '' }}</th>
+                <th>{{ $data_solver->c4 ?? '' }}</th>
               </tr>
               <tr>
-                <th>{{ $solver->best ?? '' }}</th>
-                <td class="bg-success text-light">{{ $solver->best_to_c1 ?? '' }}</td>
-                <td class="bg-success text-light">{{ $solver->best_to_c2 ?? '' }}</td>
-                <td class="bg-success text-light">{{ $solver->best_to_c3 ?? '' }}</td>
-                <td class="bg-success text-light">{{ $solver->best_to_c4 ?? '' }}</td>
+                <th>{{ $data_solver->best ?? '' }}</th>
+                <td class="bg-success text-light">{{ $data_solver->best_to_c1 ?? '' }}</td>
+                <td class="bg-success text-light">{{ $data_solver->best_to_c2 ?? '' }}</td>
+                <td class="bg-success text-light">{{ $data_solver->best_to_c3 ?? '' }}</td>
+                <td class="bg-success text-light">{{ $data_solver->best_to_c4 ?? '' }}</td>
               </tr>
             </table>
             <table class="table table-bordered text-center" style="width:50%;">
               <tr>
                 <th>Others to the Worst</th>
-                <th>{{ $solver->worst ?? '' }}</th>
+                <th>{{ $data_solver->worst ?? '' }}</th>
               </tr>
               <tr>
-                <th>{{ $solver->c1 ?? '' }}</th>
-                <td class="bg-success text-light">{{ $solver->c1_to_worst ?? '' }}</td>
+                <th>{{ $data_solver->c1 ?? '' }}</th>
+                <td class="bg-success text-light">{{ $data_solver->c1_to_worst ?? '' }}</td>
               </tr>
               <tr>
-                <th>{{ $solver->c2 ?? '' }}</th>
-                <td class="bg-success text-light">{{ $solver->c2_to_worst ?? '' }}</td>
+                <th>{{ $data_solver->c2 ?? '' }}</th>
+                <td class="bg-success text-light">{{ $data_solver->c2_to_worst ?? '' }}</td>
               </tr>
               <tr>
-                <th>{{ $solver->c3 ?? '' }}</th>
-                <td class="bg-success text-light">{{ $solver->c3_to_worst ?? '' }}</td>
+                <th>{{ $data_solver->c3 ?? '' }}</th>
+                <td class="bg-success text-light">{{ $data_solver->c3_to_worst ?? '' }}</td>
               </tr>
               <tr>
-                <th>{{ $solver->c4 ?? '' }}</th>
-                <td class="bg-success text-light">{{ $solver->c4_to_worst ?? '' }}</td>
+                <th>{{ $data_solver->c4 ?? '' }}</th>
+                <td class="bg-success text-light">{{ $data_solver->c4_to_worst ?? '' }}</td>
               </tr>
             </table>
             <table class="table table-bordered text-center">
               <tr style="vertical-align:middle;">
                 <th rowspan="2">Weights</th>
-                <th>{{ $solver->c1 ?? '' }}</th>
-                <th>{{ $solver->c2 ?? '' }}</th>
-                <th>{{ $solver->c3 ?? '' }}</th>
-                <th>{{ $solver->c4 ?? '' }}</th>
+                <th>{{ $data_solver->c1 ?? '' }}</th>
+                <th>{{ $data_solver->c2 ?? '' }}</th>
+                <th>{{ $data_solver->c3 ?? '' }}</th>
+                <th>{{ $data_solver->c4 ?? '' }}</th>
               </tr>
               <tr>
-                <td class="bg-warning">{{ $solver->weight_c1 ?? '' }}</td>
-                <td class="bg-warning">{{ $solver->weight_c2 ?? '' }}</td>
-                <td class="bg-warning">{{ $solver->weight_c3 ?? '' }}</td>
-                <td class="bg-warning">{{ $solver->weight_c4 ?? '' }}</td>
+                <td class="bg-warning">{{ $data_solver->weight_c1 ?? '' }}</td>
+                <td class="bg-warning">{{ $data_solver->weight_c2 ?? '' }}</td>
+                <td class="bg-warning">{{ $data_solver->weight_c3 ?? '' }}</td>
+                <td class="bg-warning">{{ $data_solver->weight_c4 ?? '' }}</td>
               </tr>
             </table>
             <table class="table table-bordered text-center" style="width:50%;">
               <tr>
                 <th style="width:60%;">Ksi*</th>
-                <td class="bg-warning" style="width:40%;">{{ $solver->ksi ?? '' }}</td>
+                <td class="bg-warning" style="width:40%;">{{ $data_solver->ksi ?? '' }}</td>
               </tr>
             </table>
           </div>
@@ -213,6 +227,7 @@
     </div>
   </section>
   @endif
+@endif
 
 </main><!-- End #main -->
 

@@ -161,7 +161,7 @@
         </ul>
       </li><!-- End Components Nav -->
 
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/metode-moora') | request()->is('admin/metode-bwm') ? '' : 'collapsed' }}" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-journal-text"></i><span>Perhitungan</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -177,7 +177,8 @@
             </a>
           </li>
         </ul>
-      </li><!-- End Forms Nav -->
+      </li> -->
+      <!-- End Forms Nav -->
 
     </ul>
 

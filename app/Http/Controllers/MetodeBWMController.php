@@ -17,10 +17,16 @@ use Session;
 class MetodeBWMController extends Controller {
 
   public function index() {
-    $solver = Solver::where('user_id', Session::get('loginId'))->first();
+    $data_solver = Solver::where('user_id', Session::get('loginId'))->first();
+    $data_profil = Profil::where('user_id', Session::get('loginId'))->first();
+    $message = array();
     
-    return view('admin.metode_bwm.index', compact(
-      'solver'
+    if(!isset($data_profil)) {
+      $message['data_profil'] = "Ups! Mohon maaf. Silahkan isikan data Profil terlebih dahulu sesuai prosedur perhitungan pada sistem, agar mendapatkan hasil (output) alternatif yang sesuai. Terima kasih.";
+    }
+
+    return view('front.metode_bwm.index', compact(
+      'data_solver', 'data_profil', 'message'
     ));
   }
 

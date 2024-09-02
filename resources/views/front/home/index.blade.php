@@ -4,10 +4,11 @@
 <!-- ======= Hero Section ======= -->
 <section id="hero" class="hero d-flex align-items-center">
   <div class="container">
-    <div class="row">
+    <div class="row" style="padding-top:50px;">
       <div class="col-lg-6 d-flex flex-column justify-content-center">
         <h1 data-aos="fade-up">Situs Informasi Pengadaan Barang dan Jasa Satuan Pendidikan</h1>
-        <h2 data-aos="fade-up" data-aos-delay="400">Kami menawarkan solusi modern untuk membantu Anda menemukan pemasok terbaik dalam satu wilayah</h2>
+        <hr>
+        <p data-aos="fade-up" data-aos-delay="400">Kami menawarkan solusi modern untuk membantu Anda menemukan pemasok terbaik dalam satu wilayah</p>
         @if(!Session::has('loginId'))
         <div data-aos="fade-up" data-aos-delay="600">
           <div class="text-center text-lg-start">

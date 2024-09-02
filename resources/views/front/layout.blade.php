@@ -73,8 +73,9 @@
         <ul>
           <li><a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a></li>
           <li><a class="nav-link {{ request()->is('profil') ? 'active' : '' }}" href="{{ url('profil') }}">Profil</a></li>
-          <li><a class="nav-link {{ request()->is('metode') ? 'active' : '' }}" href="{{ url('metode') }}">Metode</a></li>
           <li><a class="nav-link {{ request()->is('hasil') ? 'active' : '' }}" href="{{ url('hasil') }}">Cari Produk</a></li>
+          <li><a class="nav-link {{ request()->is('metodebwm') ? 'active' : '' }}" href="{{ url('metodebwm') }}">Metode BWM</a></li>
+          <li><a class="nav-link {{ request()->is('metodemoora') ? 'active' : '' }}" href="{{ url('metodemoora') }}">Metode MOORA</a></li>
           <li><a class="nav-link scrollto" href="#footer">Kontak Kami</a></li>
           @if(Session::has('loginId'))
           <li>
@@ -120,8 +121,9 @@
             <ul>
               <li><i class="bi bi-chevron-right"></i> <a href="">Home</a></li>
               <li><i class="bi bi-chevron-right"></i> <a href="">Profil</a></li>
-              <li><i class="bi bi-chevron-right"></i> <a href="">Metode</a></li>
               <li><i class="bi bi-chevron-right"></i> <a href="">Cari Produk</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="">Metode BWM</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="">Metode MOORA</a></li>
               <li><i class="bi bi-chevron-right"></i> <a href="">Kontak Kami</a></li>
             </ul>
           </div>
